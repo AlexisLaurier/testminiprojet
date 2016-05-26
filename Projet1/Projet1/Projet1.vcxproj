@@ -19,17 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\mini_projet\Diagramme.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\mini_projet\main.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\mini_projet\Menu.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\mini_projet\Mot.cpp" />
+    <ClInclude Include="Diagramme.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Mot.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\mini_projet\Diagramme.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\mini_projet\Menu.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\mini_projet\Mot.h" />
-    <ClInclude Include="Header.h" />
-    <ClInclude Include="Header1.h" />
+    <ClCompile Include="Diagramme.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Mot.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{29D579BF-BCB5-42DE-A5AF-9295D61F26BB}</ProjectGuid>
