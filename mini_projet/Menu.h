@@ -1,13 +1,14 @@
-#ifndef __MENU__
-#define __MENU__
+#ifndef MENU_H
+#define MENU_H
 
 #include <string>
 #include <vector>
+
 #include "Diagramme.h"
+#include "Mot.h"
 
 using namespace std;
 
-class Menu;
 
 class OptionMenu
 {
@@ -25,17 +26,22 @@ class Menu
 	string titre_;
 	vector<OptionMenu> listeOptions_;
 	bool fin_;
-	Diagramme* diagramme_;
+	Diagramme *diagramme_;
+
 public:
-	Menu(const string & titre);
+	Menu(const string &titre);
+	Menu(const Menu *copie);
 	~Menu();
-	Diagramme* getDiagramme() { return diagramme_; }
+	Diagramme getDiagramme()  const { return *diagramme_; }
+	string getTitre() const { return titre_; }
+	vector<OptionMenu> getListeOptions() const { return listeOptions_; }
 	void ajouterOption(const string &nom, const string &description);
 	void afficherMenu();
 	int demanderChoix();
 	void executer();
 	virtual void executerOption(const string &nom);
 	void quitter();
+	Diagramme *getDiagramme() { return diagramme_; }
 };
 
 
@@ -43,14 +49,15 @@ class MenuPrincipal : public Menu
 {
 public:
 	MenuPrincipal();
+	MenuPrincipal(const MenuPrincipal *mp);
 	void executerOption(const string &nom);
 };
 
 class MenuDiagramme : public Menu
 {
-	MenuPrincipal menuPrincipal_;
+	MenuPrincipal *origine_;
 public:
-	MenuDiagramme();
+	MenuDiagramme(MenuPrincipal *origine);
 	void executerOption(const string &nom);
 };
 

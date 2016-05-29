@@ -1,6 +1,5 @@
-#ifndef __MOT__
-#define __MOT__
-#include <iostream>
+#ifndef MOT_H
+#define MOT_H
 #include <string>
 
 using namespace std;
@@ -14,12 +13,12 @@ class Mot {
 public:
 	Mot(string text);
 	void apparu() { occurence_ += 1;}  // incremente le nombre d'occurence
-	bool getChoisi() { return choisi_; }
-	string getText() { return text_; }
-	int getOccurence() { return orccurence_; }
+	bool getChoisi() const { return choisi_; }
+	string getText() const { return text_; }
+	int getOccurence() const { return occurence_; }
 	void setChoisi(bool choix) { choisi_ = choix; }
 
-}
+};
 
 
 

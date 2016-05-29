@@ -1,8 +1,12 @@
-#ifndef __DIAGRAMME__
-#define __DIAGRAMME__
+#ifndef DIAGRAMME_H
+#define DIAGRAMME_H
+
 #include <iostream>
 #include <string>
 #include <vector>
+
+#include "Mot.h"
+#include "Menu.h"
 
 using namespace std;
 // Realise par Alexis LAURIER
@@ -19,22 +23,22 @@ class Diagramme {
 
 public:
 	Diagramme();
+	Diagramme(const Diagramme &diagramme);
 	void creerListe();
-	void afficher();
+	void choixMot();
+	void afficher(MenuPrincipal &origine);
 	void sauvegarde();
-	void export();
+	void charger();
+	void exporter();
 	void setNombre();
 	void setPolice();
 	void setCourbe();
 	void setOrientation();
-	string getPolice() { return police_; };
-	Courbe getCourbe() { return courbe_; };
-	int getNombre() { return nombreAffiche_; };
-	double getOrientation() { return orientation_; };
-
-}
-
-
+	vector<Mot*> getListeMot() const { return listeMot_; }
+	string getPolice() const { return police_; }
+	Courbe getCourbe()const { return courbe_; }
+	int getNombre() const { return nombreAffiche_; }
+	double getOrientation() const { return orientation_; }
 
 };
 

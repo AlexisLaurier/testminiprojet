@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "Menu.h"
+
 using namespace std;
 
 // Definition des methodes de la classe OptionMenu
@@ -15,11 +16,24 @@ OptionMenu::OptionMenu(const string &nom, const string &description)
 
 // Definition des methodes de la classe Menu
 
-Menu::Menu(const string & titre) : titre_(titre)
+Menu::Menu(const string &titre) : titre_(titre)
 {
+	listeOptions_.clear();
 	diagramme_ = new Diagramme;
 	fin_ = false;
 }
+
+Menu::Menu(const Menu *copie) 
+{
+	titre_ = copie->getTitre();
+	listeOptions_.clear();
+	for (int count = 0;count < copie->getListeOptions().size();count++)
+		listeOptions_.push_back(copie->getListeOptions().at(count));
+	diagramme_ = new Diagramme(copie->getDiagramme());
+	fin_ = false;
+}
+
+
 
 Menu::~Menu() {
 	delete diagramme_;
@@ -36,7 +50,7 @@ void Menu::afficherMenu()
 {
 	cout << titre_ << endl;
 	for (int i = 0; i<listeOptions_.size(); i++) {
-		cout << "- " << setw(2) << i << " : " << listeOptions_[i].getDescription() << endl;
+		cout << "- " << setw(2) << i+1 << " : " << listeOptions_[i].getDescription() << endl;
 	}
 }
 
@@ -51,13 +65,12 @@ int Menu::demanderChoix()
 
 void Menu::executer()
 {
-	bool fin = false;
-	while (!fin) {
+	while (!fin_) {
 		system("cls");
 		afficherMenu();
 		int choix = demanderChoix();
-		if (choix >= 0 && choix<listeOptions_.size())
-			executerOption(listeOptions_[choix].getNom());
+		if (choix >= 1 && choix<=listeOptions_.size())
+			executerOption(listeOptions_[choix-1].getNom());
 		else {
 			cout << "Choix incorrect" << endl;
 			system("pause");
@@ -80,7 +93,8 @@ void Menu::quitter()
 	char reponse;
 	cout << "Voulez-vous vraiment sortir de l'application (o/n) ?";
 	cin >> reponse;
-	if ((reponse == 'o') || (reponse == 'O')) fin_ = true;
+	if ((reponse == 'o') || (reponse == 'O')) 
+		fin_ = true;
 }
 
 
@@ -95,14 +109,17 @@ MenuPrincipal::MenuPrincipal() : Menu("Createur de nuage de mot") {
 	ajouterOption("quitter", "Quitter le programme");
 }
 
+MenuPrincipal::MenuPrincipal(const MenuPrincipal *mp) : Menu(mp) {
+}
+
 void MenuPrincipal::executerOption(const string &nom) {
 	if (nom == "chargerT")
 		getDiagramme()->creerListe();
 	else if (nom == "choisirM")
 		getDiagramme()->choixMot();
 	else if (nom == "genDiag")
-		getDiagramme()->afficher();
-	else if (nom == "sauvagrde")
+		getDiagramme()->afficher(*this);
+	else if (nom == "sauvegarde")
 		getDiagramme()->sauvegarde();
 	else if (nom == "chargerSauv")
 		getDiagramme()->charger();
@@ -113,7 +130,8 @@ void MenuPrincipal::executerOption(const string &nom) {
 
 
 // Définition de MenuDiagramme
-MenuDiagramme::MenuDiagramme() : Menu("Gestion du nuage de mot") {
+MenuDiagramme::MenuDiagramme(MenuPrincipal *origine) : Menu("Gestion du nuage de mot") {
+	origine_ = origine;
 	ajouterOption("reload", "Deplacer les mots (aleatoirement)");
 	ajouterOption("chgPolice", "Changer la police des mots");
 	ajouterOption("chgOrientation", "Changer l'orientation des mots");
@@ -123,9 +141,11 @@ MenuDiagramme::MenuDiagramme() : Menu("Gestion du nuage de mot") {
 	ajouterOption("retour", "Retour au menu principal");
 }
 
+
+
 void MenuDiagramme::executerOption(const string &nom) {
 	if (nom == "reload")
-		getDiagramme()->afficher();
+		getDiagramme()->afficher(*origine_);
 	else if (nom == "chgPolice")
 		getDiagramme()->setPolice();
 	else if (nom == "chgOrientation")
@@ -136,8 +156,10 @@ void MenuDiagramme::executerOption(const string &nom) {
 		getDiagramme()->setNombre();
 	else if (nom == "export")
 		getDiagramme()->exporter();
-	else if (nom == "retour")
-		menuPrincipal_.executer();
+	else if (nom == "retour") {
+		MenuPrincipal menuPrincipal(origine_);
+		menuPrincipal.executer();
+	}
 	else
 		Menu::executerOption(nom);
 
