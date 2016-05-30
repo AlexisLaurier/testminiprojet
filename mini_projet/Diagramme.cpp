@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -44,6 +45,17 @@ void Diagramme::ajouterMot(Mot * mot) {
 }
 
 void Diagramme::choixMot() {
+	int page=0;
+	vector<Mot*>::iterator it; 
+	cout << left << setw(40) << "Mot : " << setw(19) << "Nombre apparition" << setw(14) << "L'afficher ?" << endl;
+	for (it = listeMot_.begin()+(15*page); (it != listeMot_.end()) && (it != (listeMot_.begin() + 15 * page + 15)); it++)
+	{
+		string affiche;
+		if ((*it)->getChoisi()) { affiche = "oui"; }
+		else { affiche = "non"; };
+		cout << left << setw(40) << (*it)->getText() << setw(8) << (*it)->getOccurence() << setw(8) << affiche << endl;
+	}
+	cout << "Affichage de la page " << page + 1 << endl;
 
 }
 
