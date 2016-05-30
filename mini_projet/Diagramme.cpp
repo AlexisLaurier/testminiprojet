@@ -32,6 +32,11 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 }
 
 
+
+void Diagramme::creerListe() {
+
+}
+
 void Diagramme::ajouterMot(Mot * mot) {
 
 	listeMot_.push_back(mot);
@@ -44,13 +49,12 @@ void Diagramme::choixMot() {
 
 void Diagramme::afficher() {
 	// Création et affichage du nuage à ajouter
-
-	MenuDiagramme sousMenu(*this);
-	sousMenu.executer();
+	if(menu_)
+		menu_->executer();
 }
 
 void Diagramme::sauvegarde() {
-	string chemin, nom;
+	/*string chemin, nom;
 	cout << "Dans quel dossier dois-je effectuer la sauvegarde ?" << endl;
 	cin >> chemin;
 	cout << "Quel nom de fichier doit avoir la sauvegarde ?" << endl;
@@ -76,13 +80,14 @@ void Diagramme::sauvegarde() {
 		fich << courbe_ << endl;
 		fich << orientation_ << endl;
 
-	}
+	}*/
 
 }
 
-Diagramme Diagramme::charger(string chemin) {
+Diagramme Diagramme::charger() {
 
 	Diagramme diag;
+	/*
 	ifstream fich(chemin.c_str());
 	if (!fich.is_open()) cout << "Erreur d'ouverture, verifier le chemin du fichier" << endl;
 	else
@@ -124,26 +129,32 @@ Diagramme Diagramme::charger(string chemin) {
 		if (ligne!="</settings") {
 			cerr << "sauvegarde endommagée" << endl;
 			return;
-		}
+		}*/
 		return diag;
 
-	}
-
+	//}
+	
 }
 
 void Diagramme::exporter() {
 
 }
 
-void Diagramme::setNombre() {
 
-		system("cls");
-		cout << "Actuellement, le nuage affiche " << getNombre() << " mots, combien souhaitez vous en afficher ?" << endl;
-		cin >>  nombreAffiche_;
+void Diagramme::choixOrientation() {
 
 }
 
+void Diagramme::choixNombre() {
+	system("cls");
+	cout << "Actuellement, le nuage affiche " << getNombre() << " mots, combien souhaitez vous en afficher ?" << endl;
+	cin >> nombreAffiche_;
+}
 
-void Diagramme::choixOrientation() {
+void Diagramme::choixPolice() {
+
+}
+
+void Diagramme::choixCourbe() {
 
 }

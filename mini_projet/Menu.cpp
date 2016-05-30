@@ -94,20 +94,19 @@ void Menu::executerOption(const string &nom)
 	}
 }
 
-void Menu::quitter(bool first)
+void Menu::quitter()
 {
-	if (first) {
+
 		char reponse;
 		cout << "Voulez-vous vraiment sortir de l'application (o/n) ?";
 		cin >> reponse;
 		if ((reponse == 'o') || (reponse == 'O')) {
 			fin_ = true;
-			diagramme_->getMenu()->quitter(false);
+			if(diagramme_->getMenu())
+				delete diagramme_->getMenu();
 		}
-	}
-	else {
-		fin_ = true;
-	}
+	
+
 }
 
 
@@ -174,13 +173,13 @@ void MenuDiagramme::executerOption(const string &nom) {
 	if (nom == "reload")
 		getDiagramme()->afficher();
 	else if (nom == "chgPolice")
-		getDiagramme()->setPolice();
+		getDiagramme()->choixPolice();
 	else if (nom == "chgOrientation")
-		getDiagramme()->setOrientation();
+		getDiagramme()->choixOrientation();
 	else if (nom == "chgCourbe")
-		getDiagramme()->setCourbe();
+		getDiagramme()->choixCourbe();
 	else if (nom == "chgNb")
-		getDiagramme()->setNombre();
+		getDiagramme()->choixNombre();
 	else if (nom == "export")
 		getDiagramme()->exporter();
 	else if (nom == "retour") {

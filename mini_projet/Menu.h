@@ -44,7 +44,7 @@ public:
 	int demanderChoix();
 	void executer();
 	virtual void executerOption(const std::string &nom);
-	void quitter(bool first = true);
+	void quitter();
 	Diagramme* getDiagramme() { return diagramme_; }
 };
 

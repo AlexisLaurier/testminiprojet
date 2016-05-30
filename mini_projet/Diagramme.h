@@ -32,22 +32,23 @@ class Diagramme {
 public:
 	Diagramme();
 	Diagramme(const Diagramme &diagramme);
+	void creerListe();
 	void ajouterMot(Mot * mot);
 	void choixMot();
 	void afficher();
 	void sauvegarde();
-	Diagramme charger(std::string chemin);
+	Diagramme charger();
 	void exporter();
-	void setNombre();
 	void setnombreAffiche(int n) { nombreAffiche_ = n; }
-	int getnombreAffiche() { return nombreAffiche_; }
+	int getnombreAffiche() const { return nombreAffiche_; }
 	void setPolice(std::string police) {police_ = police;}
 	std::string getPolice() { return police_; }
 	void setCourbe(Courbe courbe) { courbe_ = courbe; };
 	void choixOrientation();
+	void choixNombre();
+	void choixPolice();
+	void choixCourbe();
 	void setOrientation(double orientation) { orientation_ = orientation; }
-	vector<Mot*> getListeMot() const { return listeMot_; }
-	string getPolice() const { return police_; }
 	std::vector<Mot*> getListeMot() const { return listeMot_; }
 	std::string getPolice() const { return police_; }
 	Courbe getCourbe() const { return courbe_; }
