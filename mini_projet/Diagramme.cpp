@@ -87,6 +87,9 @@ void Diagramme::sauvegarde() {
 Diagramme Diagramme::charger() {
 
 	Diagramme diag;
+	string chemin;
+	cout << "Merci de saisir le chemin du fichier à ouvrir" << endl;
+	cin >> chemin;
 	ifstream fich(chemin.c_str());
 	if (!fich.is_open()) cout << "Erreur d'ouverture, verifier le chemin du fichier" << endl;
 	else
