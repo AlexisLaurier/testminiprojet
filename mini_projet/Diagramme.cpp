@@ -61,12 +61,12 @@ void Diagramme::sauvegarde() {
 	else
 	{
 		fich << "<listemot>" << endl;
-		vector<int>::iterator it; // Déclaration de l'itérateur
-		for (it = liseMot_.begin();it != v.end();it++)
+		vector<Mot*>::iterator it; // Déclaration de l'itérateur
+		for (it = listeMot_.begin(); it != listeMot_.end();it++)
 			{
-				fich << *it->getText() << endl;
-				fich << *it->getOccurence() << endl;
-				fich << *it->getChoisi() << endl;
+				fich << (*it)->getText() << endl;
+				fich << (*it)->getOccurence() << endl;
+				fich << (*it)->getChoisi() << endl;
 			}
 		fich << "</listemot>" << endl;
 		fich << "<settings>" << endl;
@@ -117,13 +117,12 @@ Diagramme Diagramme::charger(string chemin) {
 		getline(fich, ligne);
 		diag.setPolice(ligne);
 		getline(fich, ligne);
-		diag.setCourbe(ligne);
+		diag.setCourbe(static_cast<Courbe>(stoi(ligne)));
 		getline(fich, ligne);
-		diag.setOrientation(static_cast<Courbe>(stoi(ligne));
+		diag.setOrientation(stoi(ligne));
 		getline(fich, ligne);
 		if (ligne!="</settings") {
 			cerr << "sauvegarde endommagée" << endl;
-			return;
 		}
 		return diag;
 
