@@ -27,6 +27,7 @@ class Diagramme {
 	Courbe courbe_;
 	double orientation_;
 	MenuDiagramme *menu_;
+	MenuPrincipal *origine_;
 	int nombreOccurenceChoisi_;
 
 public:
@@ -35,7 +36,7 @@ public:
 	void creerListe();
 	void ajouterMot(Mot * mot);
 	void choixMot();
-	void afficher();
+	void afficher(MenuPrincipal &origine);
 	void sauvegarde();
 	Diagramme charger();
 	void exporter();
@@ -49,6 +50,7 @@ public:
 	void choixPolice();
 	void choixCourbe();
 	void setOrientation(double orientation) { orientation_ = orientation; }
+	void setOrigine(MenuPrincipal* origine) { origine_ = origine; }
 	std::vector<Mot*> getListeMot() const { return listeMot_; }
 	std::string getPolice() const { return police_; }
 	Courbe getCourbe() const { return courbe_; }
@@ -57,6 +59,7 @@ public:
 	int getnombreOccurenceChoisi() const { return nombreOccurenceChoisi_; }
 	void setnombreOccurenceChoisi(int  n) { nombreOccurenceChoisi_ = n; }
 	MenuDiagramme* getMenu() const { return menu_; }
+	MenuPrincipal* getOrigine() const { return origine_; }
 
 };
 

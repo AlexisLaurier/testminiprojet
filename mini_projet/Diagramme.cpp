@@ -18,6 +18,7 @@ Diagramme::Diagramme() {
 	courbe_ = cercle; 
 	orientation_ = 45.0; // Inclinaison par défaut de +/- 45°
 	menu_ = new MenuDiagramme(*this);
+	origine_ = new MenuPrincipal(*this);
 }
 
 Diagramme::Diagramme(const Diagramme & diagramme) {
@@ -30,6 +31,7 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 	courbe_ = diagramme.getCourbe();
 	orientation_ = diagramme.getOrientation();
 	menu_ = diagramme.getMenu();
+	origine_ = diagramme.getOrigine();
 }
 
 
@@ -59,10 +61,12 @@ void Diagramme::choixMot() {
 
 }
 
-void Diagramme::afficher() {
+void Diagramme::afficher(MenuPrincipal &origine) {
 	// Création et affichage du nuage à ajouter
-	if(menu_)
-		menu_->executer();
+
+	origine_ = &origine;
+	menu_->getDiagramme()->setOrigine(&origine);
+	menu_->executer();
 }
 
 void Diagramme::sauvegarde() {

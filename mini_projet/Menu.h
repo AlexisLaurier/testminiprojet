@@ -53,7 +53,7 @@ class MenuPrincipal : public Menu
 {
 public:
 	MenuPrincipal();
-	MenuPrincipal(const Diagramme *diagramme);
+	MenuPrincipal(const Diagramme &diagramme);
 	MenuPrincipal(const MenuPrincipal *mp);
 	void executerOption(const std::string &nom);
 };

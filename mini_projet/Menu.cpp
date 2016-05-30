@@ -121,7 +121,7 @@ MenuPrincipal::MenuPrincipal() : Menu("Createur de nuage de mot") {
 	ajouterOption("quitter", "Quitter le programme");
 }
 
-MenuPrincipal::MenuPrincipal(const Diagramme *diagramme) : Menu("Createur de nuage de mot",diagramme){
+MenuPrincipal::MenuPrincipal(const Diagramme &diagramme) : Menu("Createur de nuage de mot",&diagramme){
 	ajouterOption("chargerT", "Charger un texte");
 	ajouterOption("choisirM", "Choisir les mots a garder");
 	ajouterOption("genDiag", "Generer le nuage de mot");
@@ -146,7 +146,7 @@ void MenuPrincipal::executerOption(const string &nom) {
 	else if (nom == "choisirM")
 		getDiagramme()->choixMot();
 	else if (nom == "genDiag")
-		getDiagramme()->afficher();
+		getDiagramme()->afficher(*this);
 	else if (nom == "sauvegarde")
 		getDiagramme()->sauvegarde();
 	else if (nom == "chargerSauv")
@@ -170,8 +170,10 @@ MenuDiagramme::MenuDiagramme(const Diagramme &diagramme) : Menu("Gestion du nuag
 }
 
 void MenuDiagramme::executerOption(const string &nom) {
-	if (nom == "reload")
-		getDiagramme()->afficher();
+	if (nom == "reload"){
+		MenuPrincipal* origine = getDiagramme()->getOrigine();
+		getDiagramme()->afficher(*origine);
+	}
 	else if (nom == "chgPolice")
 		getDiagramme()->choixPolice();
 	else if (nom == "chgOrientation")
@@ -183,8 +185,10 @@ void MenuDiagramme::executerOption(const string &nom) {
 	else if (nom == "export")
 		getDiagramme()->exporter();
 	else if (nom == "retour") {
-		MenuPrincipal menuPrincipal(getDiagramme());
-		menuPrincipal.executer();
+		if (getDiagramme()) {
+			if(getDiagramme()->getOrigine())
+			getDiagramme()->getOrigine()->executer();
+		}
 	}
 	else
 		Menu::executerOption(nom);
