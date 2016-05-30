@@ -10,6 +10,8 @@
 
 class Diagramme;
 class Menu;
+class MenuPrincipal;
+class MenuDiagramme;
 
 // Realise par Alexis LAURIER
 enum Courbe { cercle, rectangle };
@@ -24,13 +26,14 @@ class Diagramme {
 	std::string police_;
 	Courbe courbe_;
 	double orientation_;
+	MenuDiagramme *menu_;
 
 public:
 	Diagramme();
 	Diagramme(const Diagramme &diagramme);
 	void creerListe();
 	void choixMot();
-	void afficher(Menu &origine);
+	void afficher();
 	void sauvegarde();
 	void charger();
 	void exporter();
@@ -43,6 +46,7 @@ public:
 	Courbe getCourbe()const { return courbe_; }
 	int getNombre() const { return nombreAffiche_; }
 	double getOrientation() const { return orientation_; }
+	MenuDiagramme* getMenu() const { return menu_; }
 
 };
 

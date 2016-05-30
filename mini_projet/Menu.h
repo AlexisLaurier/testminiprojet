@@ -33,7 +33,8 @@ class Menu
 
 public:
 	Menu(const std::string &titre);
-	Menu(const Menu *copie);
+	Menu(const std::string &titre, const Diagramme *diagramme);
+	Menu(const std::string &titre, const Menu *copie);
 	~Menu();
  	Diagramme getDiagramme()  const { return *diagramme_; }
 	std::string getTitre() const { return titre_; }
@@ -43,7 +44,7 @@ public:
 	int demanderChoix();
 	void executer();
 	virtual void executerOption(const std::string &nom);
-	void quitter();
+	void quitter(bool first = true);
 	Diagramme* getDiagramme() { return diagramme_; }
 };
 
@@ -52,15 +53,15 @@ class MenuPrincipal : public Menu
 {
 public:
 	MenuPrincipal();
+	MenuPrincipal(const Diagramme *diagramme);
 	MenuPrincipal(const MenuPrincipal *mp);
 	void executerOption(const std::string &nom);
 };
 
 class MenuDiagramme : public Menu
 {
-	MenuPrincipal *origine_;
 public:
-	MenuDiagramme(MenuPrincipal *origine);
+	MenuDiagramme(const Diagramme &diagramme);
 	void executerOption(const std::string &nom);
 };
 

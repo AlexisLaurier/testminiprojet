@@ -15,6 +15,7 @@ Diagramme::Diagramme() {
 	police_; // Police par défaut à définir
 	courbe_ = cercle; 
 	orientation_ = 45.0; // Inclinaison par défaut de +/- 45°
+	menu_ = new MenuDiagramme(*this);
 }
 
 Diagramme::Diagramme(const Diagramme & diagramme) {
@@ -26,6 +27,7 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 	police_ = diagramme.getPolice();
 	courbe_ = diagramme.getCourbe();
 	orientation_ = diagramme.getOrientation();
+	menu_ = diagramme.getMenu();
 }
 
 
@@ -37,9 +39,11 @@ void Diagramme::choixMot() {
 
 }
 
-void Diagramme::afficher(Menu &origine) {
+void Diagramme::afficher() {
 	// Création et affichage du nuage à ajouter
 
+	MenuDiagramme sousMenu(*this);
+	sousMenu.executer();
 }
 
 void Diagramme::sauvegarde() {
