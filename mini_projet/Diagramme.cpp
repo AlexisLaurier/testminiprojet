@@ -163,13 +163,6 @@ void Diagramme::setNombre() {
 
 }
 
-void Diagramme::setPolice() {
-
-}
-
-void Diagramme::setCourbe() {
-
-}
 
 void Diagramme::choixOrientation() {
 

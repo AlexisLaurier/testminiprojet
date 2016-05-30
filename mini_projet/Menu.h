@@ -1,5 +1,5 @@
-#ifndef TEST
-#define TEST
+#ifndef __MENU__
+#define __MENU__
 
 #include <string>
 #include <vector>

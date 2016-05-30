@@ -1,5 +1,5 @@
-#ifndef MOT_H
-#define MOT_H
+#ifndef __MOT__
+#define __MOT__
 
 #include <string>
 
