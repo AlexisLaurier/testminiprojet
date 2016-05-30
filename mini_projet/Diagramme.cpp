@@ -61,39 +61,20 @@ void Diagramme::sauvegarde() {
 	else
 	{
 		fich << "<listemot>" << endl;
-
-		do {
-			getline(fich, ligne);
-			Mot mot(ligne);
-			getline(fich, ligne);
-			mot.setOccurence(stoi(ligne));
-			getline(fich, ligne);
-			mot.setChoisi(ligne == "1");
-			diag.ajouterMot(&mot);
-
-		} while (ligne != "</listemot>");
-
-		do {
-			getline(fich, ligne);
-
-		} while (ligne != "<settings>");
-		getline(fich, ligne);
-		diag.setnombreOccurenceChoisi(stoi(ligne));
-		getline(fich, ligne);
-		diag.setnombreAffiche(stoi(ligne));
-		getline(fich, ligne);
-		diag.setPolice(ligne);
-		getline(fich, ligne);
-		diag.setCourbe(ligne);
-		getline(fich, ligne);
-		diag.setOrientation(stod(ligne));
-
-		getline(fich, ligne);
-		if (ligne != "</settings") {
-			cerr << "sauvegarde endommagée" << endl;
-			return;
-		}
-		return diag;
+		vector<int>::iterator it; // Déclaration de l'itérateur
+		for (it = liseMot_.begin();it != v.end();it++)
+			{
+				fich << *it->getText() << endl;
+				fich << *it->getOccurence() << endl;
+				fich << *it->getChoisi() << endl;
+			}
+		fich << "</listemot>" << endl;
+		fich << "<settings>" << endl;
+		fich << nombreOccurenceChoisi_ << endl;
+		fich << nombreAffiche_ << endl;
+		fich << police_ << endl;
+		fich << courbe_ << endl;
+		fich << orientation_ << endl;
 
 	}
 
@@ -138,8 +119,7 @@ Diagramme Diagramme::charger(string chemin) {
 		getline(fich, ligne);
 		diag.setCourbe(ligne);
 		getline(fich, ligne);
-		diag.setOrientation(stod(ligne));
-
+		diag.setOrientation(static_cast<Courbe>(stoi(ligne));
 		getline(fich, ligne);
 		if (ligne!="</settings") {
 			cerr << "sauvegarde endommagée" << endl;

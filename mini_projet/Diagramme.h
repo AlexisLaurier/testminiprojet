@@ -50,7 +50,7 @@ public:
 	string getPolice() const { return police_; }
 	std::vector<Mot*> getListeMot() const { return listeMot_; }
 	std::string getPolice() const { return police_; }
-	Courbe getCourbe()const { return courbe_; }
+	Courbe getCourbe() const { return courbe_; }
 	int getNombre() const { return nombreAffiche_; }
 	double getOrientation() const { return orientation_; }
 	int getnombreOccurenceChoisi() const { return nombreOccurenceChoisi_; }
