@@ -99,7 +99,14 @@ void Diagramme::sauvegarde() {
 Diagramme Diagramme::charger() {
 
 	Diagramme diag;
+	char reponse;
 	string chemin;
+	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
+	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
+	cin >> reponse;
+	if ((reponse == 'o') || (reponse == 'O')) {
+		exit;
+	}
 	cout << "Merci de saisir le chemin du fichier à ouvrir" << endl;
 	cin >> chemin;
 	ifstream fich(chemin.c_str());
@@ -107,8 +114,7 @@ Diagramme Diagramme::charger() {
 	else
 	{
 		string ligne;
-		do { getline(fich, ligne); 
-
+		do { getline(fich, ligne);
 		}
 		while (ligne != "<listemot>");
 
