@@ -54,7 +54,7 @@ void Diagramme::afficher() {
 }
 
 void Diagramme::sauvegarde() {
-	/*string chemin, nom;
+	string chemin, nom;
 	cout << "Dans quel dossier dois-je effectuer la sauvegarde ?" << endl;
 	cin >> chemin;
 	cout << "Quel nom de fichier doit avoir la sauvegarde ?" << endl;
@@ -65,12 +65,12 @@ void Diagramme::sauvegarde() {
 	else
 	{
 		fich << "<listemot>" << endl;
-		vector<int>::iterator it; // Déclaration de l'itérateur
-		for (it = liseMot_.begin();it != v.end();it++)
+		vector<Mot*>::iterator it; // Déclaration de l'itérateur
+		for (it = listeMot_.begin(); it != listeMot_.end();it++)
 			{
-				fich << *it->getText() << endl;
-				fich << *it->getOccurence() << endl;
-				fich << *it->getChoisi() << endl;
+				fich << (*it)->getText() << endl;
+				fich << (*it)->getOccurence() << endl;
+				fich << (*it)->getChoisi() << endl;
 			}
 		fich << "</listemot>" << endl;
 		fich << "<settings>" << endl;
@@ -80,14 +80,13 @@ void Diagramme::sauvegarde() {
 		fich << courbe_ << endl;
 		fich << orientation_ << endl;
 
-	}*/
+	}
 
 }
 
 Diagramme Diagramme::charger() {
 
 	Diagramme diag;
-	/*
 	ifstream fich(chemin.c_str());
 	if (!fich.is_open()) cout << "Erreur d'ouverture, verifier le chemin du fichier" << endl;
 	else
@@ -122,18 +121,17 @@ Diagramme Diagramme::charger() {
 		getline(fich, ligne);
 		diag.setPolice(ligne);
 		getline(fich, ligne);
-		diag.setCourbe(ligne);
+		diag.setCourbe(static_cast<Courbe>(stoi(ligne)));
 		getline(fich, ligne);
-		diag.setOrientation(static_cast<Courbe>(stoi(ligne));
+		diag.setOrientation(stoi(ligne));
 		getline(fich, ligne);
 		if (ligne!="</settings") {
 			cerr << "sauvegarde endommagée" << endl;
-			return;
-		}*/
+		}
 		return diag;
 
-	//}
-	
+	}
+
 }
 
 void Diagramme::exporter() {
@@ -146,8 +144,8 @@ void Diagramme::choixOrientation() {
 }
 
 void Diagramme::choixNombre() {
-	system("cls");
-	cout << "Actuellement, le nuage affiche " << getNombre() << " mots, combien souhaitez vous en afficher ?" << endl;
+		system("cls");
+		cout << "Actuellement, le nuage affiche " << getNombre() << " mots, combien souhaitez vous en afficher ?" << endl;
 	cin >> nombreAffiche_;
 }
 
