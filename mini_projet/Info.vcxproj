@@ -127,6 +127,10 @@
     <ClInclude Include="Diagramme.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mot.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Description systeme sauvegarde.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

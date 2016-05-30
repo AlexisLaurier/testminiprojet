@@ -16,6 +16,7 @@ public:
 	bool getChoisi() const { return choisi_; }
 	string getText() const { return text_; }
 	int getOccurence() const { return occurence_; }
+	void setOccurence(int occurence) { occurence_ = occurence; }
 	void setChoisi(bool choix) { choisi_ = choix; }
 
 };

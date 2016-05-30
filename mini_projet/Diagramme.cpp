@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "Diagramme.h"
 
@@ -28,7 +29,9 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 }
 
 
-void Diagramme::creerListe() {
+void Diagramme::ajouterMot(Mot * mot) {
+
+	listeMot_.push_back(mot);
 
 }
 
@@ -42,10 +45,102 @@ void Diagramme::afficher(MenuPrincipal &origine) {
 }
 
 void Diagramme::sauvegarde() {
+	string chemin, nom;
+	cout << "Dans quel dossier dois-je effectuer la sauvegarde ?" << endl;
+	cin >> chemin;
+	cout << "Quel nom de fichier doit avoir la sauvegarde ?" << endl;
+	cin >> nom;
+	chemin = chemin + nom;
+	ofstream fich(chemin.c_str());
+	if (!fich.is_open()) cout << "Impossible d'enregistrer ici, verifier le chemin du fichier" << endl;	else
+	{
+		fich << "<listemot>" << endl;
+
+		do {
+			getline(fich, ligne);
+			Mot mot(ligne);
+			getline(fich, ligne);
+			mot.setOccurence(stoi(ligne));
+			getline(fich, ligne);
+			mot.setChoisi(ligne == "1");
+			diag.ajouterMot(&mot);
+
+		} while (ligne != "</listemot>");
+
+		do {
+			getline(fich, ligne);
+
+		} while (ligne != "<settings>");
+		getline(fich, ligne);
+		diag.setnombreOccurenceChoisi(stoi(ligne));
+		getline(fich, ligne);
+		diag.setnombreAffiche(stoi(ligne));
+		getline(fich, ligne);
+		diag.setPolice(ligne);
+		getline(fich, ligne);
+		diag.setCourbe(ligne);
+		getline(fich, ligne);
+		diag.setOrientation(stod(ligne));
+
+		getline(fich, ligne);
+		if (ligne != "</settings") {
+			cerr << "sauvegarde endommagée" << endl;
+			return;
+		}
+		return diag;
+
+	}
 
 }
 
-void Diagramme::charger() {
+Diagramme Diagramme::charger(string chemin) {
+
+	Diagramme diag;
+	ifstream fich(chemin.c_str());
+	if (!fich.is_open()) cout << "Erreur d'ouverture, verifier le chemin du fichier" << endl;	else
+	{
+		string ligne;
+		do { getline(fich, ligne); 
+
+		}
+		while (ligne != "<listemot>");
+
+		do { 		
+			getline(fich, ligne);
+			Mot mot(ligne);
+			getline(fich, ligne);
+			mot.setOccurence(stoi(ligne));
+			getline(fich, ligne);
+			mot.setChoisi(ligne == "1");
+			diag.ajouterMot(&mot);
+
+		}		
+		while (ligne != "</listemot>");
+
+		do {
+				getline(fich, ligne);
+
+		} 
+		while (ligne != "<settings>");
+		getline(fich, ligne);
+		diag.setnombreOccurenceChoisi(stoi(ligne));
+		getline(fich, ligne);
+		diag.setnombreAffiche(stoi(ligne));
+		getline(fich, ligne);
+		diag.setPolice(ligne);
+		getline(fich, ligne);
+		diag.setCourbe(ligne);
+		getline(fich, ligne);
+		diag.setOrientation(stod(ligne));
+
+		getline(fich, ligne);
+		if (ligne!="</settings") {
+			cerr << "sauvegarde endommagée" << endl;
+			return;
+		}
+		return diag;
+
+	}
 
 }
 
@@ -69,6 +164,6 @@ void Diagramme::setCourbe() {
 
 }
 
-void Diagramme::setOrientation() {
+void Diagramme::choixOrientation() {
 
 }

@@ -1,0 +1,24 @@
+Système de sauvegarde
+
+On sauvegarde les données dans un fichier texte
+
+On scinde la partie sauvegarde des mots de la partie sauvegarde des paramètres du diagramme avec les balise :
+
+<listemot> et </listemot>
+<settings> et </settings>
+
+Partie <listemot>
+
+On constitue des bloc de 3 lignes de la façon suivante
+1ère ligne : mot
+2ème ligne : nombre occurence
+3ème ligne : boolean choisi
+
+
+Partie <settings>
+
+1ère ligne : nombreOccurenceChoisi
+2ème ligne : nombre mot affichés
+3ème ligne : nom police
+4ème ligne : nom courbe retenue
+5ème ligne : valeur orientation choisie
