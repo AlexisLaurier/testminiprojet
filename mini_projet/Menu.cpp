@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "Menu.h"
+#include "Diagramme.h"
 
 using namespace std;
 
@@ -23,13 +24,18 @@ Menu::Menu(const string &titre) : titre_(titre)
 	fin_ = false;
 }
 
-Menu::Menu(const Menu *copie) 
+Menu::Menu(const string &titre, const Diagramme *diagramme) : titre_(titre) {
+	listeOptions_.clear();
+	diagramme_ = new Diagramme(*diagramme);
+	fin_ = false;
+}
+
+Menu::Menu(const string &titre, const Menu *copie) : titre_(titre)
 {
 	titre_ = copie->getTitre();
 	listeOptions_.clear();
 	for (int count = 0;count < copie->getListeOptions().size();count++)
-		listeOptions_.push_back(copie->getListeOptions().at(count));
-	diagramme_ = new Diagramme(copie->getDiagramme());
+		listeOptions_.push_back(copie->getListeOptions().at(count));	diagramme_ = new Diagramme(copie->getDiagramme());
 	fin_ = false;
 }
 
@@ -88,13 +94,20 @@ void Menu::executerOption(const string &nom)
 	}
 }
 
-void Menu::quitter()
+void Menu::quitter(bool first)
 {
-	char reponse;
-	cout << "Voulez-vous vraiment sortir de l'application (o/n) ?";
-	cin >> reponse;
-	if ((reponse == 'o') || (reponse == 'O')) 
+	if (first) {
+		char reponse;
+		cout << "Voulez-vous vraiment sortir de l'application (o/n) ?";
+		cin >> reponse;
+		if ((reponse == 'o') || (reponse == 'O')) {
+			fin_ = true;
+			diagramme_->getMenu()->quitter(false);
+		}
+	}
+	else {
 		fin_ = true;
+	}
 }
 
 
@@ -109,7 +122,23 @@ MenuPrincipal::MenuPrincipal() : Menu("Createur de nuage de mot") {
 	ajouterOption("quitter", "Quitter le programme");
 }
 
-MenuPrincipal::MenuPrincipal(const MenuPrincipal *mp) : Menu(mp) {
+MenuPrincipal::MenuPrincipal(const Diagramme *diagramme) : Menu("Createur de nuage de mot",diagramme){
+	ajouterOption("chargerT", "Charger un texte");
+	ajouterOption("choisirM", "Choisir les mots a garder");
+	ajouterOption("genDiag", "Generer le nuage de mot");
+	ajouterOption("sauvegarde", "Sauvegarde");
+	ajouterOption("chargerSauv", "Charger une sauvegarde precedente");
+	ajouterOption("quitter", "Quitter le programme");
+}
+
+
+MenuPrincipal::MenuPrincipal(const MenuPrincipal *mp) : Menu("Createur de nuage de mot",mp) {
+	ajouterOption("chargerT", "Charger un texte");
+	ajouterOption("choisirM", "Choisir les mots a garder");
+	ajouterOption("genDiag", "Generer le nuage de mot");
+	ajouterOption("sauvegarde", "Sauvegarde");
+	ajouterOption("chargerSauv", "Charger une sauvegarde precedente");
+	ajouterOption("quitter", "Quitter le programme");
 }
 
 void MenuPrincipal::executerOption(const string &nom) {
@@ -118,7 +147,7 @@ void MenuPrincipal::executerOption(const string &nom) {
 	else if (nom == "choisirM")
 		getDiagramme()->choixMot();
 	else if (nom == "genDiag")
-		getDiagramme()->afficher(*this);
+		getDiagramme()->afficher();
 	else if (nom == "sauvegarde")
 		getDiagramme()->sauvegarde();
 	else if (nom == "chargerSauv")
@@ -130,8 +159,8 @@ void MenuPrincipal::executerOption(const string &nom) {
 
 
 // Définition de MenuDiagramme
-MenuDiagramme::MenuDiagramme(MenuPrincipal *origine) : Menu("Gestion du nuage de mot") {
-	origine_ = origine;
+
+MenuDiagramme::MenuDiagramme(const Diagramme &diagramme) : Menu("Gestion du nuage de mot", &diagramme) {
 	ajouterOption("reload", "Deplacer les mots (aleatoirement)");
 	ajouterOption("chgPolice", "Changer la police des mots");
 	ajouterOption("chgOrientation", "Changer l'orientation des mots");
@@ -141,11 +170,9 @@ MenuDiagramme::MenuDiagramme(MenuPrincipal *origine) : Menu("Gestion du nuage de
 	ajouterOption("retour", "Retour au menu principal");
 }
 
-
-
 void MenuDiagramme::executerOption(const string &nom) {
 	if (nom == "reload")
-		getDiagramme()->afficher(*origine_);
+		getDiagramme()->afficher();
 	else if (nom == "chgPolice")
 		getDiagramme()->setPolice();
 	else if (nom == "chgOrientation")
@@ -157,7 +184,7 @@ void MenuDiagramme::executerOption(const string &nom) {
 	else if (nom == "export")
 		getDiagramme()->exporter();
 	else if (nom == "retour") {
-		MenuPrincipal menuPrincipal(origine_);
+		MenuPrincipal menuPrincipal(getDiagramme());
 		menuPrincipal.executer();
 	}
 	else

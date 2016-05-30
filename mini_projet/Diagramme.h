@@ -1,5 +1,5 @@
-#ifndef DIAGRAMME_H
-#define DIAGRAMME_H
+#ifndef TEST2
+#define TEST2
 
 #include <iostream>
 #include <string>
@@ -8,18 +8,25 @@
 #include "Mot.h"
 #include "Menu.h"
 
-using namespace std;
+class Diagramme;
+class Menu;
+class MenuPrincipal;
+class MenuDiagramme;
+
 // Realise par Alexis LAURIER
 enum Courbe { cercle, rectangle };
 // Realise par Alexis LAURIER
 
+
+
 class Diagramme {
 
-	vector<Mot*> listeMot_;
+	std::vector<Mot*> listeMot_;
 	int nombreAffiche_;
-	string police_;
+	std::string police_;
 	Courbe courbe_;
 	double orientation_;
+	MenuDiagramme *menu_;
 	int nombreOccurenceChoisi_;
 
 public:
@@ -27,7 +34,7 @@ public:
 	Diagramme(const Diagramme &diagramme);
 	void ajouterMot(Mot * mot);
 	void choixMot();
-	void afficher(MenuPrincipal &origine);
+	void afficher();
 	void sauvegarde();
 	Diagramme charger(string chemin)
 	void exporter();
@@ -41,20 +48,19 @@ public:
 	void setOrientation(double orientation) { orientation_ = orientation; }
 	vector<Mot*> getListeMot() const { return listeMot_; }
 	string getPolice() const { return police_; }
+	void setPolice();
+	void setCourbe();
+	void setOrientation();
+	std::vector<Mot*> getListeMot() const { return listeMot_; }
+	std::string getPolice() const { return police_; }
 	Courbe getCourbe()const { return courbe_; }
 	int getNombre() const { return nombreAffiche_; }
 	double getOrientation() const { return orientation_; }
 	int getnombreOccurenceChoisi() const { return nombreOccurenceChoisi_; }
 	void setnombreOccurenceChoisi(int : n) { nombreOccurenceChoisi_ = n; }
+	MenuDiagramme* getMenu() const { return menu_; }
 
 };
-
-
-
-
-
-
-
 
 
 
