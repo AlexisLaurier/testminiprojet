@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "Menu.h"
+#include "Diagramme.h"
 
 using namespace std;
 
@@ -28,8 +29,7 @@ Menu::Menu(const Menu *copie)
 	titre_ = copie->getTitre();
 	listeOptions_.clear();
 	for (int count = 0;count < copie->getListeOptions().size();count++)
-		listeOptions_.push_back(copie->getListeOptions().at(count));
-	diagramme_ = new Diagramme(copie->getDiagramme());
+		listeOptions_.push_back(copie->getListeOptions().at(count));	diagramme_ = new Diagramme(copie->getDiagramme());
 	fin_ = false;
 }
 

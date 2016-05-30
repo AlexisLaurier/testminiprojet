@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "Menu.h"
 #include "Diagramme.h"
 
 
@@ -36,7 +37,7 @@ void Diagramme::choixMot() {
 
 }
 
-void Diagramme::afficher(MenuPrincipal &origine) {
+void Diagramme::afficher(Menu &origine) {
 	// Création et affichage du nuage à ajouter
 
 }

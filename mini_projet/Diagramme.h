@@ -1,5 +1,5 @@
-#ifndef DIAGRAMME_H
-#define DIAGRAMME_H
+#ifndef TEST2
+#define TEST2
 
 #include <iostream>
 #include <string>
@@ -8,16 +8,20 @@
 #include "Mot.h"
 #include "Menu.h"
 
-using namespace std;
+class Diagramme;
+class Menu;
+
 // Realise par Alexis LAURIER
 enum Courbe { cercle, rectangle };
 // Realise par Alexis LAURIER
 
+
+
 class Diagramme {
 
-	vector<Mot*> listeMot_;
+	std::vector<Mot*> listeMot_;
 	int nombreAffiche_;
-	string police_;
+	std::string police_;
 	Courbe courbe_;
 	double orientation_;
 
@@ -26,7 +30,7 @@ public:
 	Diagramme(const Diagramme &diagramme);
 	void creerListe();
 	void choixMot();
-	void afficher(MenuPrincipal &origine);
+	void afficher(Menu &origine);
 	void sauvegarde();
 	void charger();
 	void exporter();
@@ -34,20 +38,13 @@ public:
 	void setPolice();
 	void setCourbe();
 	void setOrientation();
-	vector<Mot*> getListeMot() const { return listeMot_; }
-	string getPolice() const { return police_; }
+	std::vector<Mot*> getListeMot() const { return listeMot_; }
+	std::string getPolice() const { return police_; }
 	Courbe getCourbe()const { return courbe_; }
 	int getNombre() const { return nombreAffiche_; }
 	double getOrientation() const { return orientation_; }
 
 };
-
-
-
-
-
-
-
 
 
 
