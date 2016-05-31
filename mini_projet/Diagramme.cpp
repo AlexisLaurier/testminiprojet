@@ -61,12 +61,18 @@ void Diagramme::choixMot() {
 
 }
 
-void Diagramme::afficher(MenuPrincipal &origine) {
+void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	// Création et affichage du nuage à ajouter
 
-	origine_ = &origine;
-	menu_->getDiagramme()->setOrigine(&origine);
-	menu_->executer();
+
+	if (!reload) {
+		origine_ = &origine;
+		menu_->getDiagramme()->setOrigine(&origine);
+		menu_->executer();
+
+		
+	}
+	
 }
 
 void Diagramme::sauvegarde() {
@@ -165,12 +171,14 @@ void Diagramme::exporter() {
 
 
 void Diagramme::choixOrientation() {
-
+	system("cls");
+	cout << "Actuellement, le nuage affiche les mots avec une orientation maximale de +/- " << getOrientation() << " degres, quelle orientation souhaitez vous avoir ?" << endl;
+	cin >> orientation_;
 }
 
 void Diagramme::choixNombre() {
-		system("cls");
-		cout << "Actuellement, le nuage affiche " << getNombre() << " mots, combien souhaitez vous en afficher ?" << endl;
+	system("cls");
+	cout << "Actuellement, le nuage affiche " << getNombre() << " mots, combien souhaitez vous en afficher ?" << endl;
 	cin >> nombreAffiche_;
 }
 
@@ -179,5 +187,24 @@ void Diagramme::choixPolice() {
 }
 
 void Diagramme::choixCourbe() {
+	int courbe;
+	system("cls");
+	cout << "Actuellement, le nuage affiche le nuage autour d'une courbe : " << nomCourbe(getCourbe()) << endl << "Quelle courbe souhaitez-vous utiliser ?" << endl;
+	for (int courbe = 0; courbe < NOMBRE_DE_COURBE ; courbe++) {
+		cout << courbe + 1 << ") " << nomCourbe(courbe) << endl;
+	}
+	cin >> courbe;
+	courbe_ = (Courbe)(courbe-1);
+}
 
+
+string nomCourbe(int idCourbe) {
+	switch (idCourbe) {
+	case 0:
+		return "Cercle";
+	case 1:
+		return "Rectangle";
+	default:
+		return "Erreur de courbe";
+	}
 }

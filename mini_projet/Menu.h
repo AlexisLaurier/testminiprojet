@@ -36,7 +36,6 @@ public:
 	Menu(const std::string &titre, const Diagramme *diagramme);
 	Menu(const std::string &titre, const Menu *copie);
 	~Menu();
- 	Diagramme getDiagramme()  const { return *diagramme_; }
 	std::string getTitre() const { return titre_; }
 	std::vector<OptionMenu> getListeOptions() const { return listeOptions_; }
 	void ajouterOption(const std::string &nom, const std::string &description);
@@ -45,7 +44,7 @@ public:
 	void executer();
 	virtual void executerOption(const std::string &nom);
 	void quitter();
-	Diagramme* getDiagramme() { return diagramme_; }
+	Diagramme* getDiagramme() const { return diagramme_; }
 };
 
 

@@ -8,6 +8,8 @@
 #include "Mot.h"
 #include "Menu.h"
 
+#define NOMBRE_DE_COURBE 2
+
 class Diagramme;
 class Menu;
 class MenuPrincipal;
@@ -36,7 +38,7 @@ public:
 	void creerListe();
 	void ajouterMot(Mot * mot);
 	void choixMot();
-	void afficher(MenuPrincipal &origine);
+	void afficher(MenuPrincipal &origine, bool reload = false);
 	void sauvegarde();
 	Diagramme charger();
 	void exporter();
@@ -63,6 +65,7 @@ public:
 
 };
 
+std::string nomCourbe(int idCourbe);
 
 
 #endif

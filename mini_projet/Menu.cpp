@@ -35,7 +35,7 @@ Menu::Menu(const string &titre, const Menu *copie) : titre_(titre)
 	titre_ = copie->getTitre();
 	listeOptions_.clear();
 	for (int count = 0;count < copie->getListeOptions().size();count++)
-		listeOptions_.push_back(copie->getListeOptions().at(count));	diagramme_ = new Diagramme(copie->getDiagramme());
+		listeOptions_.push_back(copie->getListeOptions().at(count));	diagramme_ = new Diagramme(*copie->getDiagramme());
 	fin_ = false;
 }
 
@@ -145,8 +145,9 @@ void MenuPrincipal::executerOption(const string &nom) {
 		getDiagramme()->creerListe();
 	else if (nom == "choisirM")
 		getDiagramme()->choixMot();
-	else if (nom == "genDiag")
+	else if (nom == "genDiag") {
 		getDiagramme()->afficher(*this);
+	}
 	else if (nom == "sauvegarde")
 		getDiagramme()->sauvegarde();
 	else if (nom == "chargerSauv")
@@ -170,9 +171,9 @@ MenuDiagramme::MenuDiagramme(const Diagramme &diagramme) : Menu("Gestion du nuag
 }
 
 void MenuDiagramme::executerOption(const string &nom) {
-	if (nom == "reload"){
-		MenuPrincipal* origine = getDiagramme()->getOrigine();
-		getDiagramme()->afficher(*origine);
+	if (nom == "reload") {
+		MenuPrincipal vide;
+		getDiagramme()->afficher(vide, true);
 	}
 	else if (nom == "chgPolice")
 		getDiagramme()->choixPolice();
@@ -194,4 +195,3 @@ void MenuDiagramme::executerOption(const string &nom) {
 		Menu::executerOption(nom);
 
 }
-
