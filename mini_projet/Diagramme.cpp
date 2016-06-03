@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include <string>
+#include <stdio.h>
+#include <string.h>
 #include <vector>
 #include <fstream>
 #include <ctype.h>
@@ -9,6 +10,7 @@
 #include "Diagramme.h"
 #include "filedialog.h"
 
+#pragma warning(disable:4996)
 
 using namespace std;
 
@@ -36,9 +38,65 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 }
 
 
-
 void Diagramme::creerListe() {
+	char reponse;
+	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
+	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
+	cin >> reponse;
+	if ((reponse == 'o') || (reponse == 'O'))
 
+	{
+
+
+	}
+
+	string nomOpen = getOpenFileName("Nom du fichier à charger :", "Fichiers txt (*.txt )");
+
+	if (nomOpen != "")
+	{
+		cout << "Nom du fichier chargé : " << nomOpen << endl;
+		ifstream fich(nomOpen.c_str());
+		if (!fich.is_open())
+		{
+
+			cout << "Erreur d'ouverture, verifier le chemin du fichier" << endl;
+		}
+		else
+		{
+			string line;
+			while (getline(fich, line))
+			{
+				char delim = ' ;,.';
+				char test;
+				char * str = &test;
+				strcpy_s(str, strlen(line.c_str()), line.c_str());
+				char * pch;
+				pch = strtok( str, " ;,.");
+				while (pch != NULL)
+				{
+					vector<Mot*>::iterator it; // Déclaration de l'itérateur
+					it = listeMot_.begin();
+					int trouve = 0;
+					while ((it != listeMot_.end()) && trouve == 0)
+					{
+						if ((*it)->getText() == pch)
+						{
+							trouve = 1;
+							(*it)->apparu();
+						}
+						it++;
+					}
+					if (trouve == 0) {
+						Mot mot(pch);
+						ajouterMot(&mot);
+					}
+					pch = strtok(NULL, " ,.'");
+				}
+
+			}
+
+		}
+	}
 }
 
 void Diagramme::ajouterMot(Mot * mot) {
@@ -230,6 +288,7 @@ Diagramme Diagramme::charger() {
 				cerr << "sauvegarde endommagée, les donnees risquent d'être détériorées" << endl;
 				
 			}*/
+			fich.close();
 			return diag;
 
 		}
