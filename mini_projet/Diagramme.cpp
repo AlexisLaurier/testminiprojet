@@ -5,6 +5,8 @@
 #include <vector>
 #include <fstream>
 #include <ctype.h>
+#include <sstream>
+#include <algorithm>
 
 #include "Menu.h"
 #include "Diagramme.h"
@@ -38,7 +40,33 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 }
 
 
-void Diagramme::creerListe() {
+/*
+
+void Tokenize(const string& str,
+	vector<string>& tokens,
+	const string& delimiters = " ;,.")
+{
+	// Skip delimiters at beginning.
+	string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+	// Find first "non-delimiter".
+	string::size_type pos = str.find_first_of(delimiters, lastPos);
+
+	while (string::npos != pos || string::npos != lastPos)
+	{
+		// Found a token, add it to the vector.
+		(str.substr(lastPos, pos - lastPos);
+		// Skip delimiters.  Note the "not_of"
+		lastPos = str.find_first_not_of(delimiters, pos);
+		// Find next "non-delimiter"
+		pos = str.find_first_of(delimiters, lastPos);
+	}
+}
+
+*/
+
+
+void Diagramme::creerListe() 
+{
 	char reponse;
 	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
 	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
@@ -64,37 +92,44 @@ void Diagramme::creerListe() {
 		else
 		{
 			string line;
-			while (getline(fich, line))
-			{
-				char delim = ' ;,.';
-				char test;
-				char * str = &test;
-				strcpy_s(str, strlen(line.c_str()), line.c_str());
-				char * pch;
-				pch = strtok( str, " ;,.");
-				while (pch != NULL)
+
+				while (getline(fich, line))
 				{
-					vector<Mot*>::iterator it; // Déclaration de l'itérateur
-					it = listeMot_.begin();
-					int trouve = 0;
-					while ((it != listeMot_.end()) && trouve == 0)
+					string str = line;
+					const string& delimiters = " ;,.";
+						// Skip delimiters at beginning.
+						string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+					// Find first "non-delimiter".
+					string::size_type pos = str.find_first_of(delimiters, lastPos);
+
+					while (string::npos != pos || string::npos != lastPos)
 					{
-						if ((*it)->getText() == pch)
+						// Found a token, add it to the vector list if word doesn't already exist.
+						string motExtrait = str.substr(lastPos, pos - lastPos);
+						vector<Mot*>::iterator it; // Déclaration de l'itérateur
+						it = listeMot_.begin();
+						int trouve = 0;
+						while ((it != listeMot_.end()) && trouve == 0)
 						{
-							trouve = 1;
-							(*it)->apparu();
+							if ((*it)->getText() == motExtrait)
+							{
+								trouve = 1;
+								(*it)->apparu();
+							}
+							it++;
 						}
-						it++;
+						if (trouve == 0)
+						{
+							Mot mot(motExtrait);
+							ajouterMot(&mot);
+						}
+						// Skip delimiters.  Note the "not_of"
+						lastPos = str.find_first_not_of(delimiters, pos);
+						// Find next "non-delimiter"
+						pos = str.find_first_of(delimiters, lastPos);
 					}
-					if (trouve == 0) {
-						Mot mot(pch);
-						ajouterMot(&mot);
-					}
-					pch = strtok(NULL, " ,.'");
+
 				}
-
-			}
-
 		}
 	}
 }

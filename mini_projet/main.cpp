@@ -8,4 +8,12 @@ int main() {
 }
 
 
+/*
+int main()
+{
+	Diagramme diag;
+	diag.creerListe();
+	return 0;
+}
+*/
 
