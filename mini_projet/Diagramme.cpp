@@ -223,7 +223,6 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 void Diagramme::sauvegarde() {
 	cout << "Merci de choisir dans quel fichier effectuer la sauvegarde" << endl;
 	string nomSave = getSaveFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
-	nomSave = nomSave + ".genmots";
 	if (nomSave != "")
 	{
 		cout << "Nom du fichier sauvegardé : " << nomSave << endl;
