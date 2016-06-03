@@ -19,8 +19,6 @@ class MenuDiagramme;
 enum Courbe { cercle, rectangle };
 // Realise par Alexis LAURIER
 
-
-
 class Diagramme {
 
 	std::vector<Mot*> listeMot_;

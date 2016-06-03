@@ -18,6 +18,7 @@ public:
 	int getOccurence() const { return occurence_; }
 	void setOccurence(int occurence) { occurence_ = occurence; }
 	void setChoisi(bool choix) { choisi_ = choix; }
+	void changeChoisi() { choisi_ = !choisi_; }
 
 };
 

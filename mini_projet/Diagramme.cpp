@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <ctype.h>
 
 #include "Menu.h"
 #include "Diagramme.h"
@@ -10,7 +11,6 @@
 
 
 using namespace std;
-
 
 Diagramme::Diagramme() {
 	listeMot_.clear();
@@ -51,14 +51,65 @@ void Diagramme::choixMot() {
 	int page=0;
 	vector<Mot*>::iterator it; 
 	cout << left << setw(40) << "Mot : " << setw(19) << "Nombre apparition" << setw(14) << "L'afficher ?" << endl;
-	for (it = listeMot_.begin()+(15*page); (it != listeMot_.end()) && (it != (listeMot_.begin() + 15 * page + 15)); it++)
-	{
-		string affiche;
-		if ((*it)->getChoisi()) { affiche = "oui"; }
-		else { affiche = "non"; };
-		cout << left << setw(40) << (*it)->getText() << setw(8) << (*it)->getOccurence() << setw(8) << affiche << endl;
-	}
-	cout << "Affichage de la page " << page + 1 << endl;
+	char tap;
+	char *choix=&tap;
+	do {
+		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) && (it != (listeMot_.begin() + 15 * page + 15)); it++)
+		{
+			string affiche;
+			if ((*it)->getChoisi()) { affiche = "oui"; }
+			else { affiche = "non"; };
+			cout << left << setw(40) << (*it)->getText() << setw(8) << (*it)->getOccurence() << setw(8) << affiche << endl;
+		}
+		cout << "Affichage de la page " << page + 1 << endl;
+		cout << "Changer statut mot : numero ligne ; Changer numero page : p+, p-, px ;retourner menu principal : exit" << endl;
+		cin >> tap;
+		if (isdigit(*choix))
+		{
+			listeMot_[*choix]->changeChoisi();
+		}
+		else {
+			if(choix[0] == 'p')
+			{ 
+				switch (*choix)
+				{
+				case 'p+':
+				{page = page + 1; }
+				case 'p-':
+				{
+					if (page >= 1)
+					{
+						page = page - 1;
+					}
+					else
+						cout << "vous êtes déjà à la prémière page !" << endl;
+				
+				}
+				default :
+				{
+					char* ch = { 0 };
+					strcpy_s(ch, strlen(choix),choix + 1);
+					if(isdigit(*ch))
+					{
+						page = *ch;
+					}
+					else {
+						cout << "choix incorrect" << endl;
+						system("pause");
+					}
+
+				}
+
+			}
+			
+			}
+			
+			
+
+		}
+		
+		system("cls");
+	} while (tap != 'exit');
 
 }
 

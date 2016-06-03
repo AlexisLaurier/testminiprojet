@@ -1,25 +1,22 @@
 #include "Menu.h"
 
 
-
+/*
 int main() {
-	MenuPrincipal menu;
+	menuprincipal menu;
 	menu.executer();
 	return 0;
 }
+*/
 
 
 
-/*
 int main()
 
 {
 	Diagramme test;
-	test.sauvegarde();
-	test.charger();
+	test.choixMot();
 	system("pause");
 
 
 }
-
-*/
