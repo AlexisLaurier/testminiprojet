@@ -119,12 +119,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Diagramme.cpp" />
+    <ClCompile Include="filedialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Diagramme.h" />
+    <ClInclude Include="filedialog.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mot.h" />
     <ClInclude Include="resource.h" />

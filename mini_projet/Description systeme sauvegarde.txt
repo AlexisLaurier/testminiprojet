@@ -4,8 +4,8 @@ On sauvegarde les données dans un fichier texte
 
 On scinde la partie sauvegarde des mots de la partie sauvegarde des paramètres du diagramme avec les balise :
 
-<listemot> et </listemot>
-<settings> et </settings>
+&&listemot&& et /&&listemot&&
+&&settings&& et /&&settings&&
 
 Partie <listemot>
 

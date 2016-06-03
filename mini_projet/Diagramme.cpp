@@ -6,6 +6,7 @@
 
 #include "Menu.h"
 #include "Diagramme.h"
+#include "filedialog.h"
 
 
 using namespace std;
@@ -14,7 +15,7 @@ using namespace std;
 Diagramme::Diagramme() {
 	listeMot_.clear();
 	nombreAffiche_ = 50;  //50 mots par défaut
-	police_; // Police par défaut à définir
+	police_ = "test"; // Police par défaut à définir
 	courbe_ = cercle; 
 	orientation_ = 45.0; // Inclinaison par défaut de +/- 45°
 	menu_ = new MenuDiagramme(*this);
@@ -76,90 +77,111 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 }
 
 void Diagramme::sauvegarde() {
-	string chemin, nom;
-	cout << "Dans quel dossier dois-je effectuer la sauvegarde ?" << endl;
-	cin >> chemin;
-	cout << "Quel nom de fichier doit avoir la sauvegarde ?" << endl;
-	cin >> nom;
-	chemin = chemin + nom;
-	ofstream fich(chemin.c_str());
-	if (!fich.is_open()) cout << "Impossible d'enregistrer ici, verifier le chemin du fichier" << endl;
-	else
+	cout << "Merci de choisir dans quel fichier effectuer la sauvegarde" << endl;
+	string nomSave = getSaveFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
+
+	if (nomSave != "")
 	{
-		fich << "<listemot>" << endl;
-		vector<Mot*>::iterator it; // Déclaration de l'itérateur
-		for (it = listeMot_.begin(); it != listeMot_.end();it++)
+		cout << "Nom du fichier sauvegardé : " << nomSave << endl;
+		ofstream fich(nomSave.c_str());
+		if (!fich.is_open())
+			cout << "Impossible d'enregistrer ici, verifier le chemin du fichier" << endl;
+		else
+		{
+			fich << "&&listemot&&" << endl;
+			vector<Mot*>::iterator it; // Déclaration de l'itérateur
+			for (it = listeMot_.begin(); it != listeMot_.end(); it++)
 			{
 				fich << (*it)->getText() << endl;
 				fich << (*it)->getOccurence() << endl;
 				fich << (*it)->getChoisi() << endl;
 			}
-		fich << "</listemot>" << endl;
-		fich << "<settings>" << endl;
-		fich << nombreOccurenceChoisi_ << endl;
-		fich << nombreAffiche_ << endl;
-		fich << police_ << endl;
-		fich << courbe_ << endl;
-		fich << orientation_ << endl;
+			fich << "/&&listemot&&" << endl;
+			fich << "&&settings&&" << endl;
+			fich << nombreOccurenceChoisi_ << endl;
+			fich << nombreAffiche_ << endl;
+			fich << police_ << endl;
+			fich << courbe_ << endl;
+			fich << orientation_ << endl;
+			fich << "/&&settings&&" << endl;
+			cout << "Sauvegarde effectuée !" << endl;
+			system("pause");
 
+		}
 	}
-
+	else
+	{
+		cout << "Abandon" << endl;
+	}
 }
+
 
 Diagramme Diagramme::charger() {
 
 	Diagramme diag;
 	char reponse;
-	string chemin;
 	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
 	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
 	cin >> reponse;
-	if ((reponse == 'o') || (reponse == 'O')) {
-		exit;
-	}
-	cout << "Merci de saisir le chemin du fichier à ouvrir" << endl;
-	cin >> chemin;
-	ifstream fich(chemin.c_str());
-	if (!fich.is_open()) cout << "Erreur d'ouverture, verifier le chemin du fichier" << endl;
-	else
+	if ((reponse == 'o') || (reponse == 'O')) 
+	
 	{
-		string ligne;
-		do { getline(fich, ligne);
+
+
+	}
+
+	string nomOpen = getOpenFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
+
+	if (nomOpen != "")
+	{
+		cout << "Nom du fichier chargé : " << nomOpen << endl;
+		ifstream fich(nomOpen.c_str());
+		if (!fich.is_open())
+		{
+
+			cout << "Erreur d'ouverture, verifier le chemin du fichier" << endl;
 		}
-		while (ligne != "<listemot>");
 
-		do { 		
-			getline(fich, ligne);
-			Mot mot(ligne);
-			getline(fich, ligne);
-			mot.setOccurence(stoi(ligne));
-			getline(fich, ligne);
-			mot.setChoisi(ligne == "1");
-			diag.ajouterMot(&mot);
+		else
+		{
+			string ligne;
+			do {
+				getline(fich, ligne);
+			} while (ligne != "&&listemot&&");
 
-		}		
-		while (ligne != "</listemot>");
+			do {
+				getline(fich, ligne);
+				Mot mot(ligne);
+				getline(fich, ligne);
+				mot.setOccurence(stoi(ligne));
+				getline(fich, ligne);
+				mot.setChoisi(ligne == "1");
+				diag.ajouterMot(&mot);
 
-		do {
+			} while (ligne != "/&&listemot&&");
+
+			do {
 				getline(fich, ligne);
 
-		} 
-		while (ligne != "<settings>");
-		getline(fich, ligne);
-		diag.setnombreOccurenceChoisi(stoi(ligne));
-		getline(fich, ligne);
-		diag.setnombreAffiche(stoi(ligne));
-		getline(fich, ligne);
-		diag.setPolice(ligne);
-		getline(fich, ligne);
-		diag.setCourbe(static_cast<Courbe>(stoi(ligne)));
-		getline(fich, ligne);
-		diag.setOrientation(stoi(ligne));
-		getline(fich, ligne);
-		if (ligne!="</settings") {
-			cerr << "sauvegarde endommagée" << endl;
+			} while (ligne != "&&settings&&");
+			getline(fich, ligne);
+			diag.setnombreOccurenceChoisi(stoi(ligne));
+			getline(fich, ligne);
+			diag.setnombreAffiche(stoi(ligne));
+			getline(fich, ligne);
+			diag.setPolice(ligne);
+			getline(fich, ligne);
+			diag.setCourbe(static_cast<Courbe>(stoi(ligne)));
+			getline(fich, ligne);
+			diag.setOrientation(stoi(ligne));
+			getline(fich, ligne);
+			/*if (ligne != "/&&settings&&") {
+				cerr << "sauvegarde endommagée, les donnees risquent d'être détériorées" << endl;
+				
+			}*/
+			return diag;
+
 		}
-		return diag;
 
 	}
 
