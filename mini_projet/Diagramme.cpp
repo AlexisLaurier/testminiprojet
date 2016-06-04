@@ -16,6 +16,11 @@
 
 using namespace std;
 
+bool comparerMot(const Mot *elem1, const Mot *elem2)
+{
+	return elem1->getOccurence() > elem2->getOccurence();
+}
+
 Diagramme::Diagramme() {
 	listeMot_.clear();
 	nombreAffiche_ = 50;  //50 mots par défaut
@@ -131,6 +136,8 @@ void Diagramme::creerListe()
 					}
 
 				}
+
+				sort(listeMot_.begin(), listeMot_.end(), comparerMot);
 		}
 	}
 }
