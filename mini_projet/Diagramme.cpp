@@ -142,9 +142,9 @@ void Diagramme::ajouterMot(Mot * mot) {
 }
 
 void Diagramme::choixMot() {
-	int page=0;
+	int page = 0; int i = 0;
 	vector<Mot*>::iterator it; 
-	cout << left << setw(40) << "Mot : " << setw(19) << "Nombre apparition" << setw(14) << "L'afficher ?" << endl;
+	cout << left << setw(14) << "N°ligne" << setw(25) << "Mot : " << setw(22) << "Nombre d'apparition" << setw(14) << "L'afficher ?" << endl;
 	char tap;
 	char *choix=&tap;
 	do {
@@ -153,14 +153,18 @@ void Diagramme::choixMot() {
 			string affiche;
 			if ((*it)->getChoisi()) { affiche = "oui"; }
 			else { affiche = "non"; };
-			cout << left << setw(40) << *(*it)->getText() << setw(8) << (*it)->getOccurence() << setw(8) << affiche << endl;
+			cout << left << setw(14) << i << setw(25) << *(*it)->getText() << setw(22) << (*it)->getOccurence() << setw(14) << affiche << endl;
+			i += 1;
 		}
+		i = 0;
 		cout << "Affichage de la page " << page + 1 << endl;
 		cout << "Changer statut mot : numero ligne ; Changer numero page : p+, p-, px ;retourner menu principal : exit" << endl;
 		cin >> tap;
 		if (isdigit(*choix))
 		{
-			listeMot_[*choix]->changeChoisi();
+			int j = tap;
+			(listeMot_[j])->changeChoisi();
+			
 		}
 		else {
 			if(choix[0] == 'p')
