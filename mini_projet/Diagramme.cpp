@@ -45,31 +45,6 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 }
 
 
-/*
-
-void Tokenize(const string& str,
-	vector<string>& tokens,
-	const string& delimiters = " ;,.")
-{
-	// Skip delimiters at beginning.
-	string::size_type lastPos = str.find_first_not_of(delimiters, 0);
-	// Find first "non-delimiter".
-	string::size_type pos = str.find_first_of(delimiters, lastPos);
-
-	while (string::npos != pos || string::npos != lastPos)
-	{
-		// Found a token, add it to the vector.
-		(str.substr(lastPos, pos - lastPos);
-		// Skip delimiters.  Note the "not_of"
-		lastPos = str.find_first_not_of(delimiters, pos);
-		// Find next "non-delimiter"
-		pos = str.find_first_of(delimiters, lastPos);
-	}
-}
-
-*/
-
-
 void Diagramme::creerListe() 
 {
 	char reponse;
@@ -243,9 +218,19 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	
 }
 
+//http://stackoverflow.com/questions/20446201/how-to-check-if-string-ends-with-txt
+bool has_suffix(const std::string &str)
+{
+	string suffix = "genmots"; 
+	return str.size() >= suffix.size() &&
+		str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+
 void Diagramme::sauvegarde() {
 	cout << "Merci de choisir dans quel fichier effectuer la sauvegarde" << endl;
 	string nomSave = getSaveFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
+	if (!has_suffix(nomSave))
+		nomSave += ".genmots";
 	if (nomSave != "")
 	{
 		cout << "Nom du fichier sauvegardé : " << nomSave << endl;
