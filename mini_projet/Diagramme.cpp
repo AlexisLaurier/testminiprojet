@@ -19,7 +19,7 @@ using namespace std;
 Diagramme::Diagramme() {
 	listeMot_.clear();
 	nombreAffiche_ = 50;  //50 mots par défaut
-	police_ = "test"; // Police par défaut à définir
+	police_ = "testPolice"; // Police par défaut à définir
 	courbe_ = cercle; 
 	orientation_ = 45.0; // Inclinaison par défaut de +/- 45°
 	menu_ = new MenuDiagramme(*this);
@@ -107,11 +107,12 @@ void Diagramme::creerListe()
 						// Found a token, add it to the vector list if word doesn't already exist.
 						string motExtrait = str.substr(lastPos, pos - lastPos);
 						vector<Mot*>::iterator it; // Déclaration de l'itérateur
+						Mot *motAAjouter = new Mot;
 						it = listeMot_.begin();
 						int trouve = 0;
 						while ((it != listeMot_.end()) && trouve == 0)
 						{
-							if ((*it)->getText() == motExtrait)
+							if (*(*it)->getText() == motExtrait)
 							{
 								trouve = 1;
 								(*it)->apparu();
@@ -120,8 +121,8 @@ void Diagramme::creerListe()
 						}
 						if (trouve == 0)
 						{
-							Mot mot(motExtrait);
-							ajouterMot(&mot);
+							motAAjouter->setText(motExtrait);
+							listeMot_.push_back(motAAjouter);
 						}
 						// Skip delimiters.  Note the "not_of"
 						lastPos = str.find_first_not_of(delimiters, pos);
@@ -147,12 +148,12 @@ void Diagramme::choixMot() {
 	char tap;
 	char *choix=&tap;
 	do {
-		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) && (it != (listeMot_.begin() + 15 * page + 15)); it++)
+		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) ; it++)
 		{
 			string affiche;
 			if ((*it)->getChoisi()) { affiche = "oui"; }
 			else { affiche = "non"; };
-			cout << left << setw(40) << (*it)->getText() << setw(8) << (*it)->getOccurence() << setw(8) << affiche << endl;
+			cout << left << setw(40) << *(*it)->getText() << setw(8) << (*it)->getOccurence() << setw(8) << affiche << endl;
 		}
 		cout << "Affichage de la page " << page + 1 << endl;
 		cout << "Changer statut mot : numero ligne ; Changer numero page : p+, p-, px ;retourner menu principal : exit" << endl;
@@ -175,7 +176,7 @@ void Diagramme::choixMot() {
 						page = page - 1;
 					}
 					else
-						cout << "vous êtes déjà à la prémière page !" << endl;
+						cout << "vous etes deja a la premiere page !" << endl;
 				
 				}
 				default :
