@@ -154,10 +154,8 @@ void Diagramme::choixMot() {
 	string choix;
 	while(choix != "exit") {
 		cout << left << setw(14) << "N°ligne" << setw(25) << "Mot : " << setw(22) << "Nombre d'apparition" << setw(14) << "L'afficher ?" << endl;
-		int count = 0;
-		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) && count<15 ; it++)
+		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) && i<15 ; it++)
 		{
-			count++;
 			string affiche;
 			if ((*it)->getChoisi()) { affiche = "oui"; }
 			else { affiche = "non"; };
@@ -260,7 +258,7 @@ void Diagramme::sauvegarde() {
 			vector<Mot*>::iterator it; // Déclaration de l'itérateur
 			for (it = listeMot_.begin(); it != listeMot_.end(); it++)
 			{
-				fich << (*it)->getText() << endl;
+				fich << *(*it)->getText() << endl;
 				fich << (*it)->getOccurence() << endl;
 				fich << (*it)->getChoisi() << endl;
 			}
@@ -293,7 +291,7 @@ Diagramme Diagramme::charger() {
 	cin >> reponse;
 	if ((reponse == 'N') || (reponse == 'n')) 
 	{
-		return;
+		exit;
 	}
 
 	string nomOpen = getOpenFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
@@ -317,12 +315,13 @@ Diagramme Diagramme::charger() {
 
 			do {
 				getline(fich, ligne);
-				Mot mot(ligne);
+				Mot *mot = new Mot;
+				mot->setText(ligne);
 				getline(fich, ligne);
-				mot.setOccurence(stoi(ligne));
+				mot->setOccurence(stoi(ligne));
 				getline(fich, ligne);
-				mot.setChoisi(ligne == "1");
-				diag.ajouterMot(&mot);
+				mot->setChoisi(ligne == "1");
+				diag.ajouterMot(mot);
 
 			} while (ligne != "/&&listemot&&");
 
@@ -341,11 +340,13 @@ Diagramme Diagramme::charger() {
 			getline(fich, ligne);
 			diag.setOrientation(stoi(ligne));
 			getline(fich, ligne);
-			/*if (ligne != "/&&settings&&") {
-				cerr << "sauvegarde endommagée, les donnees risquent d'être détériorées" << endl;
-				
-			}*/
 			fich.close();
+			if (ligne != "/&&settings&&") {
+				cerr << "sauvegarde endommagée, les donnees risquent d'être détériorées" << endl;
+				system("pause");
+				exit;
+
+			}
 			return diag;
 
 		}
