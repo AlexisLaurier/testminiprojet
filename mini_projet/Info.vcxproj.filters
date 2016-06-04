@@ -47,7 +47,7 @@
     <ClInclude Include="filedialog.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Desktop\cming\CImg.h">
+    <ClInclude Include="CImg.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

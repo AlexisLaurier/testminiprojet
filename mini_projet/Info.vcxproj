@@ -125,7 +125,7 @@
     <ClCompile Include="Mot.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Desktop\cming\CImg.h" />
+    <ClInclude Include="CImg.h" />
     <ClInclude Include="Diagramme.h" />
     <ClInclude Include="filedialog.h" />
     <ClInclude Include="Menu.h" />
