@@ -76,11 +76,9 @@ void Diagramme::creerListe()
 	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
 	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
 	cin >> reponse;
-	if ((reponse == 'o') || (reponse == 'O'))
-
+	if ((reponse == 'n') || (reponse == 'N'))
 	{
-
-
+		return;
 	}
 
 	string nomOpen = getOpenFileName("Nom du fichier à charger :", "Fichiers txt (*.txt )");
@@ -293,11 +291,9 @@ Diagramme Diagramme::charger() {
 	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
 	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
 	cin >> reponse;
-	if ((reponse == 'o') || (reponse == 'O')) 
-	
+	if ((reponse == 'N') || (reponse == 'n')) 
 	{
-
-
+		return;
 	}
 
 	string nomOpen = getOpenFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
