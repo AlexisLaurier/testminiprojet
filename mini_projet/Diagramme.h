@@ -38,7 +38,7 @@ public:
 	void choixMot();
 	void afficher(MenuPrincipal &origine, bool reload = false);
 	void sauvegarde();
-	Diagramme charger();
+	void charger();
 	void exporter();
 	void setnombreAffiche(int n) { nombreAffiche_ = n; }
 	int getnombreAffiche() const { return nombreAffiche_; }

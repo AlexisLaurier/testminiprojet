@@ -154,7 +154,7 @@ void Diagramme::choixMot() {
 	string choix;
 	while(choix != "exit") {
 		cout << left << setw(14) << "N°ligne" << setw(25) << "Mot : " << setw(22) << "Nombre d'apparition" << setw(14) << "L'afficher ?" << endl;
-		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) && i<15 ; it++)
+		for (it = listeMot_.begin() + (19 * page); (it != listeMot_.end()) && i<19 ; it++)
 		{
 			string affiche;
 			if ((*it)->getChoisi()) { affiche = "oui"; }
@@ -165,7 +165,7 @@ void Diagramme::choixMot() {
 		i = 0;
 		cout << "Affichage de la page " << page + 1 << endl;
 		cout << "Changer statut mot : numero ligne ; Changer numero page : p+, p-, px ;retourner menu principal : exit" << endl;
-		cout << endl << erreur << endl;
+		cout << endl << erreur;
 		cin >> choix;
 		if (isdigit(choix[0]))
 		{
@@ -185,7 +185,7 @@ void Diagramme::choixMot() {
 				switch (choix[1])
 				{
 				case '+':
-					if (listeMot_.size() > (page+1) * 15) {
+					if (listeMot_.size() > (page+1) * 19) {
 						page = page + 1; 
 						erreur = "";
 					}
@@ -206,7 +206,7 @@ void Diagramme::choixMot() {
 				default :
 				{
 					int pageCible = stoi(choix.erase(0,1));
-					if(listeMot_.size() > 15*(pageCible-1))
+					if(listeMot_.size() > 19*(pageCible-1))
 					{
 						page = pageCible-1;
 						erreur = "";
@@ -262,14 +262,14 @@ void Diagramme::sauvegarde() {
 				fich << (*it)->getOccurence() << endl;
 				fich << (*it)->getChoisi() << endl;
 			}
-			fich << "/&&listemot&&" << endl;
+			fich << "/listemot&&" << endl;
 			fich << "&&settings&&" << endl;
 			fich << nombreOccurenceChoisi_ << endl;
 			fich << nombreAffiche_ << endl;
 			fich << police_ << endl;
 			fich << courbe_ << endl;
 			fich << orientation_ << endl;
-			fich << "/&&settings&&" << endl;
+			fich << "/settings&&" << endl;
 			cout << "Sauvegarde effectuée !" << endl;
 			system("pause");
 
@@ -282,7 +282,7 @@ void Diagramme::sauvegarde() {
 }
 
 
-Diagramme Diagramme::charger() {
+void Diagramme::charger() {
 
 	Diagramme diag;
 	char reponse;
@@ -312,9 +312,8 @@ Diagramme Diagramme::charger() {
 			do {
 				getline(fich, ligne);
 			} while (ligne != "&&listemot&&");
-
+			getline(fich, ligne);
 			do {
-				getline(fich, ligne);
 				Mot *mot = new Mot;
 				mot->setText(ligne);
 				getline(fich, ligne);
@@ -322,8 +321,9 @@ Diagramme Diagramme::charger() {
 				getline(fich, ligne);
 				mot->setChoisi(ligne == "1");
 				diag.ajouterMot(mot);
+				getline(fich, ligne);
 
-			} while (ligne != "/&&listemot&&");
+			} while (ligne != "/listemot&&");
 
 			do {
 				getline(fich, ligne);
@@ -341,13 +341,17 @@ Diagramme Diagramme::charger() {
 			diag.setOrientation(stoi(ligne));
 			getline(fich, ligne);
 			fich.close();
-			if (ligne != "/&&settings&&") {
-				cerr << "sauvegarde endommagée, les donnees risquent d'être détériorées" << endl;
+			if (ligne != "/settings&&") {
+				cerr << "sauvegarde endommagée, les donnees n'ont pas été importées" << endl;
 				system("pause");
 				exit;
 
 			}
-			return diag;
+	
+			*this = diag;
+			cout << "Chargement effectuée !" << endl;
+			system("pause");
+			return;
 
 		}
 
