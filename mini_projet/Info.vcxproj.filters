@@ -47,9 +47,6 @@
     <ClInclude Include="filedialog.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="CImg.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Description systeme sauvegarde.txt" />
