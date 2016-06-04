@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include "Diagramme.h"
 #include "filedialog.h"
+#include "CImg.h"
 
 #pragma warning(disable:4996)
 
