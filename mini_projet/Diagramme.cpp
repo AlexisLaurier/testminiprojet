@@ -149,58 +149,74 @@ void Diagramme::ajouterMot(Mot * mot) {
 }
 
 void Diagramme::choixMot() {
+	system("cls");
 	int page = 0; int i = 0;
 	vector<Mot*>::iterator it; 
-	cout << left << setw(14) << "N°ligne" << setw(25) << "Mot : " << setw(22) << "Nombre d'apparition" << setw(14) << "L'afficher ?" << endl;
-	char tap;
-	char *choix=&tap;
-	do {
-		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) ; it++)
+	string erreur ="";
+	string choix;
+	while(choix != "exit") {
+		cout << left << setw(14) << "N°ligne" << setw(25) << "Mot : " << setw(22) << "Nombre d'apparition" << setw(14) << "L'afficher ?" << endl;
+		int count = 0;
+		for (it = listeMot_.begin() + (15 * page); (it != listeMot_.end()) && count<15 ; it++)
 		{
+			count++;
 			string affiche;
 			if ((*it)->getChoisi()) { affiche = "oui"; }
 			else { affiche = "non"; };
-			cout << left << setw(14) << i << setw(25) << *(*it)->getText() << setw(22) << (*it)->getOccurence() << setw(14) << affiche << endl;
+			cout << left << setw(14) << i+1 << setw(25) << *(*it)->getText() << setw(22) << (*it)->getOccurence() << setw(14) << affiche << endl;
 			i += 1;
 		}
 		i = 0;
 		cout << "Affichage de la page " << page + 1 << endl;
 		cout << "Changer statut mot : numero ligne ; Changer numero page : p+, p-, px ;retourner menu principal : exit" << endl;
-		cin >> tap;
-		if (isdigit(*choix))
+		cout << endl << erreur << endl;
+		cin >> choix;
+		if (isdigit(choix[0]))
 		{
-			int j = tap;
-			(listeMot_[j])->changeChoisi();
+			int indice = stoi(choix);
+			if (indice <= listeMot_.size()) {
+				(listeMot_[indice - 1])->changeChoisi();
+				erreur = "";
+			}
+			else {
+				erreur = "Erreur d'indice";
+			}
 			
 		}
 		else {
 			if(choix[0] == 'p')
 			{ 
-				switch (*choix)
+				switch (choix[1])
 				{
-				case 'p+':
-				{page = page + 1; }
-				case 'p-':
-				{
+				case '+':
+					if (listeMot_.size() > (page+1) * 15) {
+						page = page + 1; 
+						erreur = "";
+					}
+					else {
+						erreur = "Plus d'autres mots";
+					}
+					break;
+				case '-':
 					if (page >= 1)
 					{
 						page = page - 1;
+						erreur = "";
 					}
 					else
-						cout << "vous etes deja a la premiere page !" << endl;
+						erreur= "Vous etes deja a la premiere page !";
 				
-				}
+					break;
 				default :
 				{
-					char* ch = { 0 };
-					strcpy_s(ch, strlen(choix),choix + 1);
-					if(isdigit(*ch))
+					int pageCible = stoi(choix.erase(0,1));
+					if(listeMot_.size() > 15*(pageCible-1))
 					{
-						page = *ch;
+						page = pageCible-1;
+						erreur = "";
 					}
 					else {
-						cout << "choix incorrect" << endl;
-						system("pause");
+						erreur = "choix incorrect";
 					}
 
 				}
@@ -212,9 +228,8 @@ void Diagramme::choixMot() {
 			
 
 		}
-		
 		system("cls");
-	} while (tap != 'exit');
+	}
 
 }
 
