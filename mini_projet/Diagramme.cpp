@@ -16,6 +16,7 @@
 #pragma warning(disable:4996)
 
 using namespace std;
+using namespace cimg_library;
 
 bool comparerMot(const Mot *elem1, const Mot *elem2)
 {
@@ -207,6 +208,43 @@ void Diagramme::choixMot() {
 
 void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	// Création et affichage du nuage à ajouter
+	// Usefull colors
+	unsigned char grid_color[3] = { 0,0,255 };
+
+	// Declare an image to draw the grid
+	CImg<unsigned char> grid(600, 600, 1, 3, 255);
+
+	// Declare a display to draw the scene
+	CImgDisplay disp(grid, "Générateur de mot", 0, false, false);
+
+	// Center the window on the screen
+	disp.move((CImgDisplay::screen_width() - disp.width()) / 2,
+		(CImgDisplay::screen_height() - disp.height()) / 2);
+
+
+
+
+	// Main loop, exit if the display window is closed or if ESC or Q key is hit
+
+
+		// Display the scene
+		// Declare an image to display the scene
+		CImg<unsigned char> scene = grid;
+		unsigned char color = 1;
+		scene.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
+		// Usefull variables
+
+		scene.display(disp);
+
+		disp.wait();
+
+		// Handle window resize
+		if (disp.is_resized()) disp.resize();
+
+
+
+
+
 
 
 	if (!reload) {

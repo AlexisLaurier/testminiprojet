@@ -1,6 +1,7 @@
 #include "Menu.h"
+#include "CImg.h"
 
-
+using namespace cimg_library;
 
 
 int main() {
@@ -10,8 +11,8 @@ int main() {
 }
 
 
-
 /*
+
 
 int main()
 {
@@ -19,4 +20,5 @@ int main()
 	diag.charger();
 	return 0;
 } */
+
 
