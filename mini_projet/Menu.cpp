@@ -187,8 +187,11 @@ void MenuDiagramme::executerOption(const string &nom) {
 		getDiagramme()->exporter();
 	else if (nom == "retour") {
 		if (getDiagramme()) {
-			if(getDiagramme()->getOrigine())
-			getDiagramme()->getOrigine()->executer();
+			if (getDiagramme()->getOrigine()) {
+				Diagramme* diag = getDiagramme();
+				diag->getOrigine()->setDiagramme(*diag);
+				diag->getOrigine()->executer();
+			}
 		}
 	}
 	else

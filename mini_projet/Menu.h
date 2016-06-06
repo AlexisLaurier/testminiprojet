@@ -45,6 +45,7 @@ public:
 	virtual void executerOption(const std::string &nom);
 	void quitter();
 	Diagramme* getDiagramme() const { return diagramme_; }
+	void setDiagramme(Diagramme& diag) { diagramme_ = &diag; }
 };
 
 

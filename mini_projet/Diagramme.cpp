@@ -249,6 +249,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 
 	if (!reload) {
 		origine_ = &origine;
+		menu_->setDiagramme(*this);
 		menu_->getDiagramme()->setOrigine(&origine);
 		menu_->executer();
 
