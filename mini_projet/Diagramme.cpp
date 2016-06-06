@@ -147,8 +147,8 @@ void Diagramme::choixMot() {
 		if (isdigit(choix[0]))
 		{
 			int indice = stoi(choix);
-			if (indice <= listeMot_.size()) {
-				(listeMot_[indice - 1])->changeChoisi();
+			if (indice + 19 * page <= listeMot_.size()) {
+				(listeMot_[(indice - 1) + 19*page])->changeChoisi();
 				erreur = "";
 			}
 			else {
