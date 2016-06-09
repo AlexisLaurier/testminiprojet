@@ -273,36 +273,54 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		Point point = { 300,300,0 };
 		bool libre;
 		int iteration = 0;
+		int** tab = new int*[600];
+		for (int i = 0; i < 600; i++)
+			tab[i] = new int[600];
 		while (it != listeMotAleatoire.end())
 		{
-			int i = 0;
-			int j = 0;
-			hauteur = 20*((*it)->getOccurenceNormalisee());
-			hauteur = 10 + hauteur;
+			longueur = 50*((*it)->getOccurenceNormalisee());
+			longueur = 40 + longueur;
 			string * mot = (*it)->getText();
-			longueur = mot->size()*hauteur;
+			hauteur = mot->size()*longueur;
+			for (int i = 0; i < 600; i++)
+			{
+				for (int j = 0; j < 600;j++)
+				{
+					tab[i][j] = 0;
+				}
+			}
 			bool positionne = false;
-			while (!positionne && iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
+			while (!positionne && iteration<150) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
 			{
 				libre = true;
-				while (i < hauteur && point.x + i <600 && libre) // eviter dépassement fenêtre
+				for (int i = int(point.x); i < (int(point.x) + hauteur) && i<600; i++)
 				{
-					while (j < longueur && point.y + j <600 && libre)// eviter dépassement fenêtre
+
+					for (int j = int(point.y); j < (int(point.y) + longueur) && j<600; j++)
 					{
-						if ((int)scene_((int)point.x + i, (int)point.y + j, 0, 0) + (int)scene_(point.x + i, point.y + j, 0, 1) + (int)scene_(point.x + i, point.y + j, 0, 2) != 765)
+						if (tab[i][j] == 1)
 						{
 							libre = false;
+							cout << "j'ai trouve des 1 connards" << endl;
 						}
-						j++;
 					}
-					i++;
 				}
 				if (libre)
 				{
 					iteration = 0;
 					color = rand() % 600;
-					scene_.draw_text((int)point.x, (int)point.y, mot->c_str() , &color, 0, 1, hauteur);
+					scene_.draw_text((int)point.x, (int)point.y, mot->c_str() , &color, 0, 1, hauteur/4);
+					cout << longueur << " " << hauteur << endl;
+					cout << "pos " << (int)point.x << " " << (int)point.y << endl;
+					cout << libre << endl;
 					positionne = true;
+					for (int i = int(point.x); i < int(point.x) + longueur; i++)
+					{
+						for (int j = int(point.y); j < int(point.y) + hauteur; j++)
+						{
+							tab[i][j] = 1;
+						}
+					}
 				}
 				else
 				{
@@ -310,8 +328,6 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				}
 
 				point = prochainPoint(courbe_, point);
-				i = 0;
-				j = 0;
 			}
 
 			it++;
@@ -533,8 +549,8 @@ Point Diagramme::prochainPoint(Courbe courbe, Point pointActuelle) {
 	Point prochainPoint = { 0,0,t + 1 };
 	switch (courbe) {
 	case cercle:
-		prochainPoint.x = 300+t*sin(t);
-		prochainPoint.y = 300+t*cos(t);
+		prochainPoint.x = 300+10*t*sin(36000*t);
+		prochainPoint.y = 300+10*t*cos(36000*t);
 		break;
 	case rectangle:
 		break;
