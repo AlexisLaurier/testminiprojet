@@ -306,7 +306,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				{
 					iteration++;
 				}
-				point.posCourbe += 1;
+
 				point = prochainPoint(courbe_, point);
 			}
 
