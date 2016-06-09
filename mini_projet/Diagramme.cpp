@@ -282,12 +282,12 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 			string * mot = (*it)->getText();
 			longueur = mot->size()*hauteur;
 			bool positionne = false;
-			while (positionne || iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
+			while (positionne && iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
 			{
 				libre = true;
-				while (i < hauteur || point.x + i <600) // eviter dépassement fenêtre
+				while (i < hauteur && point.x + i <600) // eviter dépassement fenêtre
 				{
-					while (j < longueur || point.y + j <600)// eviter dépassement fenêtre
+					while (j < longueur && point.y + j <600)// eviter dépassement fenêtre
 					{
 						if ((int)scene_(point.x + i, point.y + j, 0, 0) + (int)scene_(point.x + i, point.y + j, 1) + (int)scene_(point.x + i, point.y + j, 2) != 765)
 							libre = false;
