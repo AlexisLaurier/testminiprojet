@@ -117,6 +117,30 @@ void Diagramme::creerListe()
 				}
 
 				sort(listeMot_.begin(), listeMot_.end(), comparerMot);
+				//recherche des extrémaux en nombre d'occurence
+				int min = 0;
+				int max = 0;
+				int value = 0;
+				vector<Mot*>::iterator it; // Déclaration de l'itérateur
+				for (it = listeMot_.begin(); it != listeMot_.end(); it++)
+				{
+					value = (*it)->getOccurence();
+					if (value > max) { max = value; }
+					if (value < min) { min = value; }
+
+				}
+
+				if (max != 0) {
+					for (it = listeMot_.begin(); it != listeMot_.end(); it++)
+					{
+						double occurence;
+						occurence = (*it)->getOccurenceNormalisee();
+						occurence = (occurence - min) / (max - min);
+						(*it)->setOccurenceNormalisee(occurence);
+
+					}
+
+				}
 		}
 	}
 }
@@ -378,6 +402,30 @@ void Diagramme::charger() {
 			}
 	
 			*this = diag;
+			//recherche des extrémaux en nombre d'occurence
+			int min = 0;
+			int max = 0;
+			int value = 0;
+			vector<Mot*>::iterator it; // Déclaration de l'itérateur
+			for (it = listeMot_.begin(); it != listeMot_.end(); it++)
+			{
+				value = (*it)->getOccurence();
+				if (value > max) { max = value; }
+				if (value < min) { min = value; }
+
+			}
+
+			if (max != 0) {
+				for (it = listeMot_.begin(); it != listeMot_.end(); it++)
+				{
+					double occurence;
+					occurence = (*it)->getOccurenceNormalisee();
+					occurence = (occurence - min) / (max - min);
+					(*it)->setOccurenceNormalisee(occurence);
+
+				}
+
+			}
 			cout << "Chargement effectuee !" << endl;
 			system("pause");
 			return;

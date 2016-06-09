@@ -9,6 +9,7 @@ class Mot {
 	std::string * text_;
 	int occurence_;
 	bool choisi_;
+	double occurenceNormalisee_;
 	
 public:
 	Mot();
@@ -19,6 +20,8 @@ public:
 	bool getChoisi() const { return choisi_; }
 	std::string* getText() const { return text_; }
 	int getOccurence() const { return occurence_; }
+	int getOccurenceNormalisee() const { return occurenceNormalisee_; }
+	void setOccurenceNormalisee(double occurence) { occurenceNormalisee_ = occurence; }
 	void setOccurence(int occurence) { occurence_ = occurence; }
 	void setChoisi(bool choix) { choisi_ = choix; }
 	void setText(std::string texte) { text_ = new std::string(texte); }
