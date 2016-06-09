@@ -277,7 +277,6 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		int iteration = 0;
 		while (it != listeMotAleatoire.end())
 		{
-			libre = true;
 			hauteur = 20*((*it)->getOccurenceNormalisee());
 			hauteur = 10 + hauteur;
 			string * mot = (*it)->getText();
@@ -285,6 +284,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 			bool positionne = false;
 			while (positionne || iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
 			{
+				libre = true;
 				while (i < hauteur || point.x + i <600) // eviter dépassement fenêtre
 				{
 					while (j < longueur || point.y + j <600)// eviter dépassement fenêtre
