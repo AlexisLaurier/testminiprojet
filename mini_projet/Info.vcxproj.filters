@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Description systeme sauvegarde.txt" />
+    <Text Include="Text.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
