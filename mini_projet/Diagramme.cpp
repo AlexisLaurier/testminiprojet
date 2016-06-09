@@ -528,8 +528,8 @@ Point Diagramme::prochainPoint(Courbe courbe, Point pointActuelle) {
 	Point prochainPoint = { 0,0,t + 1 };
 	switch (courbe) {
 	case cercle:
-		prochainPoint.x = t*sin(t);
-		prochainPoint.y = t*cos(t);
+		prochainPoint.x = 300+t*sin(t);
+		prochainPoint.y = 300+t*cos(t);
 		break;
 	case rectangle:
 		break;
