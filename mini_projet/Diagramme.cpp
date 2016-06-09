@@ -275,7 +275,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		Point point = { 300,300,0 };
 		bool libre=false;
 		int iteration = 0;
-		while (it != listeMot_.end())
+		while (it != listeMotAleatoire.end())
 		{
 			hauteur = 20*((*it)->getOccurenceNormalisee());
 			hauteur = 10 + hauteur;
@@ -310,7 +310,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 			it++;
 		}
 
-		scene_.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
+		//scene_.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
 		// Usefull variables
 
 		scene_.display(disp);
