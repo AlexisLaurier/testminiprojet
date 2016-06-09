@@ -19,6 +19,13 @@ class MenuDiagramme;
 enum Courbe { cercle, rectangle };
 // Realise par Alexis LAURIER
 
+typedef struct Point{
+	int x;
+	int y;
+	int posCourbe;
+};
+
+
 class Diagramme {
 
 	std::vector<Mot*> listeMot_;
@@ -42,7 +49,7 @@ public:
 	void exporter();
 	void setnombreAffiche(int n) { nombreAffiche_ = n; }
 	int getnombreAffiche() const { return nombreAffiche_; }
-	void setPolice(std::string police) {police_ = police;}
+	void setPolice(std::string police) { police_ = police; }
 	std::string getPolice() { return police_; }
 	void setCourbe(Courbe courbe) { courbe_ = courbe; };
 	void choixOrientation();
@@ -60,8 +67,10 @@ public:
 	void setnombreOccurenceChoisi(int  n) { nombreOccurenceChoisi_ = n; }
 	MenuDiagramme* getMenu() const { return menu_; }
 	MenuPrincipal* getOrigine() const { return origine_; }
+	Point prochainPoint(Courbe courbe, Point pointActuelle);
 
 };
+
 
 std::string nomCourbe(int idCourbe);
 

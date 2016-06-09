@@ -416,6 +416,21 @@ void Diagramme::choixCourbe() {
 	courbe_ = (Courbe)(courbe-1);
 }
 
+Point Diagramme::prochainPoint(Courbe courbe, Point pointActuelle) {
+	int t = pointActuelle.posCourbe;
+	Point prochainPoint = { 0,0,t + 1 };
+	switch (courbe) {
+	case cercle:
+		prochainPoint.x = t*sin(t);
+		prochainPoint.y = t*cos(t);
+		break;
+	case rectangle:
+		break;
+	}
+	return prochainPoint;
+
+}
+
 
 string nomCourbe(int idCourbe) {
 	switch (idCourbe) {
@@ -427,3 +442,6 @@ string nomCourbe(int idCourbe) {
 		return "Erreur de courbe";
 	}
 }
+
+
+
