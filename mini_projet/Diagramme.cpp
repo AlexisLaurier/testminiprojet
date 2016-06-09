@@ -293,11 +293,14 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		scene_ = grid;
 		Point point{ 300,300,0 };
 		int nombreMotAffiche = 0;
+		bool utilise = false;
 		for (vector<Mot*>::iterator it = listeMotAleatoire.begin(); it != listeMotAleatoire.end() && nombreMotAffiche<nombreAffiche_; it++) {
 			if ((*it)->getChoisi()) {
 				unsigned char color[] = { rand() % 256, rand() % 256,rand() % 256 };
 
-				bool utilise = false;
+				if (utilise)
+					it--;
+				utilise = false;
 				string text = *(*it)->getText();
 
 				int hauteur = 15 + 50 * (*it)->getOccurenceNormalisee();
@@ -309,7 +312,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 						int r = (int)scene_(i, j, 0, 0);
 						int g = (int)scene_(i, j, 0, 1);
 						int b = (int)scene_(i, j, 0, 2);
-						if (r + g + b != 765) {
+						if (r + g + b != 765 || i == 599 || j == 599) {
 							utilise = true;
 						}
 
@@ -320,9 +323,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 					scene_.draw_text(point.x, point.y, text.c_str(), color, 0, 1, hauteur);
 					nombreMotAffiche++;
 				}
-				else {
-					it--;
-				}
+
 				point = prochainPoint(cercle, point);
 			}
 		}
