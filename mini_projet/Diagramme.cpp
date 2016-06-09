@@ -282,14 +282,14 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 			string * mot = (*it)->getText();
 			longueur = mot->size()*hauteur;
 			bool positionne = false;
-			while (positionne && iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
+			while (!positionne && iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
 			{
 				libre = true;
 				while (i < hauteur && point.x + i <600) // eviter dépassement fenêtre
 				{
 					while (j < longueur && point.y + j <600)// eviter dépassement fenêtre
 					{
-						if ((int)scene_(point.x + i, point.y + j, 0, 0) + (int)scene_(point.x + i, point.y + j, 1) + (int)scene_(point.x + i, point.y + j, 2) != 765)
+						if ((int)scene_((int)point.x + i, (int)point.y + j, 0, 0) + (int)scene_(point.x + i, point.y + j, 1) + (int)scene_(point.x + i, point.y + j, 2) != 255)
 							libre = false;
 						j++;
 					}
@@ -300,6 +300,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 					iteration = 0;
 					color = rand() % 600;
 					scene_.draw_text((int)point.x, (int)point.y, mot->c_str() , &color, 0, 1, 23);
+					scene_.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
 					positionne = true;
 				}
 				else
@@ -311,7 +312,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 			it++;
 		}
 
-		//scene_.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
+		
 		// Usefull variables
 
 		scene_.display(disp);
