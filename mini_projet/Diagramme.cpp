@@ -282,7 +282,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 			string * mot = (*it)->getText();
 			longueur = mot->size()*hauteur;
 			bool positionne = false;
-			while (positionne || iteration<15) // Laisser le mot de coté s'il n'y a pas la place de l'afficher
+			while (positionne || iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
 			{
 				while (i < hauteur || point.x + i <600) // eviter dépassement fenêtre
 				{
@@ -296,6 +296,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				}
 				if (libre)
 				{
+					iteration = 0;
 					color = rand() % 600;
 					scene_.draw_text(point.x, point.y, mot->c_str() , &color, 0, 1, 23);
 					positionne = true;

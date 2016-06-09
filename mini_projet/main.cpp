@@ -12,13 +12,11 @@ int main() {
 
 
 /*
-
-
 int main()
 {
 	Diagramme diag;
-	diag.charger();
+	diag.afficher();
 	return 0;
-} */
-
+} 
+*/
 
