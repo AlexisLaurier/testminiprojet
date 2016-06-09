@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// Definition des methodes de la classe OptionMenu
+/// Definition des methodes de la classe OptionMenu
 
 OptionMenu::OptionMenu(const string &nom, const string &description)
 	: nom_(nom), description_(description)
@@ -15,8 +15,10 @@ OptionMenu::OptionMenu(const string &nom, const string &description)
 }
 
 
-// Definition des methodes de la classe Menu
+/// Definition des methodes de la classe Menu
 
+
+// Constructeur par défaut
 Menu::Menu(const string &titre) : titre_(titre)
 {
 	listeOptions_.clear();
@@ -24,12 +26,14 @@ Menu::Menu(const string &titre) : titre_(titre)
 	fin_ = false;
 }
 
+// Constructeur prenant le diagramme comme paramètre
 Menu::Menu(const string &titre, const Diagramme *diagramme) : titre_(titre) {
 	listeOptions_.clear();
 	diagramme_ = new Diagramme(*diagramme);
 	fin_ = false;
 }
 
+// Constructeur de copie
 Menu::Menu(const string &titre, const Menu *copie) : titre_(titre)
 {
 	titre_ = copie->getTitre();
@@ -40,7 +44,7 @@ Menu::Menu(const string &titre, const Menu *copie) : titre_(titre)
 }
 
 
-
+// Destructeur
 Menu::~Menu() {
 	delete diagramme_;
 }
@@ -103,14 +107,14 @@ void Menu::quitter()
 		if ((reponse == 'o') || (reponse == 'O')) {
 			fin_ = true;
 			if(diagramme_->getMenu())
-				delete diagramme_->getMenu();
+				delete diagramme_->getMenu(); // Pour pouvoir fermer completement l'application
 		}
 	
 
 }
 
 
-// Définition de MenuPrincipal
+/// Définition de MenuPrincipal
 
 MenuPrincipal::MenuPrincipal() : Menu("Createur de nuage de mot") {
 	ajouterOption("chargerT", "Charger un texte");
@@ -158,7 +162,7 @@ void MenuPrincipal::executerOption(const string &nom) {
 }
 
 
-// Définition de MenuDiagramme
+/// Définition de MenuDiagramme
 
 MenuDiagramme::MenuDiagramme(const Diagramme &diagramme) : Menu("Gestion du nuage de mot", &diagramme) {
 	ajouterOption("reload", "Deplacer les mots (aleatoirement)");

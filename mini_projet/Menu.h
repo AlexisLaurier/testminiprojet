@@ -22,7 +22,7 @@ public:
 	std::string getDescription() const { return description_; }
 };
 
-
+// Class parente des menus du programme
 class Menu
 {
 	Diagramme* diagramme_;
@@ -48,7 +48,7 @@ public:
 	void setDiagramme(Diagramme& diag) { diagramme_ = &diag; }
 };
 
-
+// Menu principal du programme apparaît à l'ouverture de celui-ci
 class MenuPrincipal : public Menu
 {
 public:
@@ -58,6 +58,7 @@ public:
 	void executerOption(const std::string &nom);
 };
 
+// Menu de gestion des diagrammes s'ouvre lorsqu'on affiche le diagramme
 class MenuDiagramme : public Menu
 {
 public:
