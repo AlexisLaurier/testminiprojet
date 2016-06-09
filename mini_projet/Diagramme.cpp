@@ -62,7 +62,7 @@ void Diagramme::creerListe()
 	{
 		return;
 	}
-
+	listeMot_.clear();
 	string nomOpen = getOpenFileName("Nom du fichier a charger :", "Fichiers txt (*.txt )");
 
 	if (nomOpen != "")
