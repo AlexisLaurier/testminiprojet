@@ -1,3 +1,4 @@
+//Romain Julian et LAURIER Alexis
 #ifndef __DIAGRAMME__
 #define __DIAGRAMME__
 

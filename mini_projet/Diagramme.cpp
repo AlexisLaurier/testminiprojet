@@ -1,3 +1,5 @@
+//Romain Julian et LAURIER Alexis
+
 #include <iostream>
 #include <iomanip>
 #include <stdio.h>
@@ -19,24 +21,28 @@
 using namespace std;
 using namespace cimg_library;
 
+// fonctione retournant un bool utilisé pour trier les vector dans l'ordre décroissant des occurences
 bool comparerMot(const Mot *elem1, const Mot *elem2)
 {
 	return elem1->getOccurence() > elem2->getOccurence();
 }
 
+// constructeur par défaut
 Diagramme::Diagramme() {
 	listeMot_.clear();
 	nombreAffiche_ = 20;  //20 mots par défaut
 	police_ = "testPolice"; // Police par défaut à définir
-	courbe_ = cercle; 
+	courbe_ = cercle; // courbe de génération de base
 	orientation_ = 45.0; // Inclinaison par défaut de +/- 45°
 	menu_ = new MenuDiagramme(*this);
 	origine_ = new MenuPrincipal(*this);
 	CImg<unsigned char> grid(600, 600, 1, 3, 255);
-	scene_ = grid;
+	scene_ = grid; // definition de l'espace cimg du diagramme
 }
 
-Diagramme::Diagramme(const Diagramme & diagramme) {
+//constructeur de recopie
+
+Diagramme::Diagramme(const Diagramme & diagramme) { 
 	listeMot_.clear();
 	for (int count = 0; count < diagramme.getListeMot().size();count++) {
 		listeMot_.push_back(diagramme.getListeMot().at(count));
@@ -51,6 +57,7 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 	scene_ = grid;
 }
 
+// importation de la liste des mots, traitements des données et séparation selon les caractères définis dans les spécification
 
 void Diagramme::creerListe() 
 {
@@ -81,7 +88,7 @@ void Diagramme::creerListe()
 				while (getline(fich, line))
 				{
 					string str = line;
-					const string& delimiters = " ;,.";
+					const string& delimiters = " ;,.()!?";
 						// Skip delimiters at beginning.
 						string::size_type lastPos = str.find_first_not_of(delimiters, 0);
 					// Find first "non-delimiter".
@@ -146,11 +153,15 @@ void Diagramme::creerListe()
 	}
 }
 
-void Diagramme::ajouterMot(Mot * mot) {
+//methode permettant d'ajouter un nouveau mot à la liste
+
+void Diagramme::ajouterMot(Mot * mot) { 
 
 	listeMot_.push_back(mot);
 
 }
+
+//methode permettant d'effectuer le choix des mots à afficher en proposant une interface à l'utilisateur
 
 void Diagramme::choixMot() {
 	system("cls");
@@ -234,6 +245,8 @@ void Diagramme::choixMot() {
 	}
 
 }
+
+//Génère le nuage de mot à partir d'un ordre aléatoire des mots, puis affiche les mots en suivant la courbe dont les points sont définies par la fonction prochainPoint
 
 void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	// Création et affichage du nuage à ajouter
@@ -357,6 +370,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	
 }
 
+// méthode permettant de vérifier si le chemin du fichier fourni contient déjà l'extension .genmots et l'ajoute si necessaire
 //http://stackoverflow.com/questions/20446201/how-to-check-if-string-ends-with-txt
 bool has_suffix(const std::string &str)
 {
@@ -365,6 +379,8 @@ bool has_suffix(const std::string &str)
 		str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 
+
+//methode permettant de sauvegarder les paramètres entrés par l'utilisateur
 void Diagramme::sauvegarde() {
 	cout << "Merci de choisir dans quel fichier effectuer la sauvegarde" << endl;
 	string nomSave = getSaveFileName("Nom du fichier a sauvegarder :", "Fichiers genmots (*.genmots )");
@@ -405,7 +421,7 @@ void Diagramme::sauvegarde() {
 	}
 }
 
-
+//méthode permettant de charger une sauvegarde effectuée précédamment, de la vérifier, puis de la charger en mémoire si celle ci est valide
 void Diagramme::charger() {
 
 	Diagramme diag;
@@ -507,29 +523,34 @@ void Diagramme::charger() {
 
 }
 
+// fonction permettant d'exporter le diagramme généré au format .ppm
+
 void Diagramme::exporter() {
 	string nomSave = getSaveFileName("Nom du fichier a sauvegarder :", "Fichiers image (*.ppm )");
 	scene_.save(nomSave.c_str());
 
 }
 
-
+//fonction permettant de choisir la plage d'orientation des mots dans le diagramme // pas encore implémenté à l'affichage
 void Diagramme::choixOrientation() {
 	system("cls");
 	cout << "Actuellement, le nuage affiche les mots avec une orientation maximale de +/- " << getOrientation() << " degres, quelle orientation souhaitez vous avoir ?" << endl;
 	cin >> orientation_;
 }
-
+// fonction permettant de définir un autre filtre que celui du choix manuel des mots : le nombre de mots à afficher simultanément,
+// dont l'odre est pris de facon décroissante dans la liste aléatoire réalisé à chaque affichage
 void Diagramme::choixNombre() {
 	system("cls");
 	cout << "Actuellement, le nuage affiche " << getNombre() << " mots, combien souhaitez vous en afficher ?" << endl;
 	cin >> nombreAffiche_;
 }
 
+
+// pas encore implémenté - permet de choisir la police à utiliser pour réaliser le diagramme
 void Diagramme::choixPolice() {
 
 }
-
+// pas encore implémenté à l'affichage - permet de choisir plusieurs courbes de génération de base
 void Diagramme::choixCourbe() {
 	int courbe;
 	system("cls");
@@ -540,7 +561,7 @@ void Diagramme::choixCourbe() {
 	cin >> courbe;
 	courbe_ = (Courbe)(courbe-1);
 }
-
+// Fonction retournant le prochain point à tester pour placer le mot suivant en fonction de la courbe choisie
 Point Diagramme::prochainPoint(Courbe courbe, Point pointActuelle) {
 	int t = pointActuelle.posCourbe;
 	Point prochainPoint = { 0,0,t + 1 };
@@ -556,7 +577,7 @@ Point Diagramme::prochainPoint(Courbe courbe, Point pointActuelle) {
 
 }
 
-
+// définition des différentes courbes disponibles
 string nomCourbe(int idCourbe) {
 	switch (idCourbe) {
 	case 0:
