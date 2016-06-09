@@ -237,8 +237,8 @@ void Diagramme::choixMot() {
 bool comparerMotAleatoire(const Mot *elem1, const Mot *elem2)
 {
 	double rnd = rand() % 100;
-	rnd = rnd / 100;
-	return elem1->getOccurenceNormalisee()*rnd > elem2->getOccurenceNormalisee()*rnd;
+	rnd = rnd / 10;
+	return elem1->getOccurenceNormalisee() > elem2->getOccurenceNormalisee()*rnd;
 }
 
 void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
@@ -285,12 +285,14 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 			while (!positionne && iteration<15) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
 			{
 				libre = true;
-				while (i < hauteur && point.x + i <600) // eviter dépassement fenêtre
+				while (i < hauteur && point.x + i <600 && libre) // eviter dépassement fenêtre
 				{
-					while (j < longueur && point.y + j <600)// eviter dépassement fenêtre
+					while (j < longueur && point.y + j <600 && libre)// eviter dépassement fenêtre
 					{
-						if ((int)scene_((int)point.x + i, (int)point.y + j, 0, 0) + (int)scene_(point.x + i, point.y + j, 0,1) + (int)scene_(point.x + i, point.y + j, 0,2) != 255)
+						if ((int)scene_((int)point.x + i, (int)point.y + j, 0, 0) + (int)scene_(point.x + i, point.y + j, 0, 1) + (int)scene_(point.x + i, point.y + j, 0, 2) != 765)
+						{
 							libre = false;
+						}
 						j++;
 					}
 					i++;
@@ -299,7 +301,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				{
 					iteration = 0;
 					color = rand() % 600;
-					scene_.draw_text((int)point.x, (int)point.y, mot->c_str() , &color, 0, 1, 23);
+					scene_.draw_text((int)point.x, (int)point.y, mot->c_str() , &color, 0, 1, hauteur);
 					positionne = true;
 				}
 				else
@@ -308,6 +310,8 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				}
 
 				point = prochainPoint(courbe_, point);
+				i = 0;
+				j = 0;
 			}
 
 			it++;
