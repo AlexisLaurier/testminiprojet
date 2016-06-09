@@ -245,7 +245,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	// Création et affichage du nuage à ajouter
 	// Usefull colors
 	vector<Mot*> listeMotAleatoire = listeMot_;
-	sort(listeMotAleatoire.begin(), listeMot_.end(), comparerMotAleatoire);
+	sort(listeMotAleatoire.begin(), listeMotAleatoire.end(), comparerMotAleatoire);
 	unsigned char grid_color[3] = { 0,0,255 };
 
 	// Declare an image to draw the grid
@@ -296,6 +296,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				}
 				if (libre)
 				{
+					color = rand() % 600;
 					scene_.draw_text(point.x, point.y, mot->c_str() , &color, 0, 1, 23);
 					positionne = true;
 				}
