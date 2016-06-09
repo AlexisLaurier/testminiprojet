@@ -131,7 +131,7 @@ MenuPrincipal::MenuPrincipal(const Diagramme &diagramme) : Menu("Createur de nua
 }
 
 
-MenuPrincipal::MenuPrincipal(const MenuPrincipal *mp) : Menu("Createur de nuage de mot",mp) {
+MenuPrincipal::MenuPrincipal(const MenuPrincipal &mp) : Menu("Createur de nuage de mot",&mp) {
 	ajouterOption("chargerT", "Charger un texte");
 	ajouterOption("choisirM", "Choisir les mots a garder");
 	ajouterOption("genDiag", "Generer le nuage de mot");
@@ -172,8 +172,8 @@ MenuDiagramme::MenuDiagramme(const Diagramme &diagramme) : Menu("Gestion du nuag
 
 void MenuDiagramme::executerOption(const string &nom) {
 	if (nom == "reload") {
-		MenuPrincipal vide;
-		getDiagramme()->afficher(vide, true);
+		MenuPrincipal Menu(*getDiagramme()->getOrigine());
+		getDiagramme()->afficher(Menu, true);
 	}
 	else if (nom == "chgPolice")
 		getDiagramme()->choixPolice();

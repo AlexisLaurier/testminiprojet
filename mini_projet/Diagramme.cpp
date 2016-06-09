@@ -26,7 +26,7 @@ bool comparerMot(const Mot *elem1, const Mot *elem2)
 
 Diagramme::Diagramme() {
 	listeMot_.clear();
-	nombreAffiche_ = 50;  //50 mots par défaut
+	nombreAffiche_ = 20;  //20 mots par défaut
 	police_ = "testPolice"; // Police par défaut à définir
 	courbe_ = cercle; 
 	orientation_ = 45.0; // Inclinaison par défaut de +/- 45°
@@ -237,6 +237,7 @@ void Diagramme::choixMot() {
 
 bool comparerMotAleatoire(const Mot *elem1, const Mot *elem2)
 {
+	srand(time(NULL));
 	double rnd = rand() % 100;
 	rnd = rnd / 10;
 	return elem1->getOccurenceNormalisee() > elem2->getOccurenceNormalisee()*rnd;
@@ -269,36 +270,39 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		scene_ = grid;
 		Point point{ 300,300,0 };
 		srand(time(NULL));
-		for (vector<Mot*>::iterator it = listeMotAleatoire.begin(); it != listeMotAleatoire.end(); it++) {
+		int nombreMotAffiche = 0;
+		for (vector<Mot*>::iterator it = listeMotAleatoire.begin(); it != listeMotAleatoire.end() && nombreMotAffiche<nombreAffiche_; it++) {
+			if ((*it)->getChoisi()) {
+				unsigned char color[] = { rand() % 256, rand() % 256,rand() % 256 };
 
-			unsigned char color[] = { rand()%256, rand() % 256,rand() % 256 };
+				bool utilise = false;
+				string text = *(*it)->getText();
 
-			bool utilise = false;
-			string text = *(*it)->getText();
+				int hauteur = 15 + 40 * (*it)->getOccurenceNormalisee();
+				int longueur = text.size()*hauteur;
 
-			int hauteur = 15 + 20 * (*it)->getOccurenceNormalisee();
-			int longueur = text.size()*hauteur;
+				for (int i = point.x; i < point.x + longueur + 10;i++) {
+					for (int j = point.y;j < point.y + hauteur + 10;j++) {
 
-			for (int i = point.x; i < point.x + longueur+10;i++) {
-				for (int j = point.y;j < point.y + hauteur+10;j++) {
+						int r = (int)scene_(i, j, 0, 0);
+						int g = (int)scene_(i, j, 0, 1);
+						int b = (int)scene_(i, j, 0, 2);
+						if (r + g + b != 765) {
+							utilise = true;
+						}
 
-					int r = (int)scene_(i, j, 0, 0);
-					int g = (int)scene_(i, j, 0, 1);
-					int b = (int)scene_(i, j, 0, 2);
-					if (r + g + b != 765) {
-						utilise = true;
+
 					}
-					
-						
 				}
+				if (!utilise) {
+					scene_.draw_text(point.x, point.y, text.c_str(), color, 0, 1, hauteur);
+					nombreMotAffiche++;
+				}
+				else {
+					it--;
+				}
+				point = prochainPoint(cercle, point);
 			}
-			if (!utilise) {
-				scene_.draw_text(point.x, point.y, text.c_str(), color, 0, 1, hauteur);
-			}
-			else {
-				it--;
-			}
-			point = prochainPoint(cercle, point);
 		}
 		
 
