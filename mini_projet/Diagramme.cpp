@@ -234,9 +234,18 @@ void Diagramme::choixMot() {
 
 }
 
+bool comparerMotAleatoire(const Mot *elem1, const Mot *elem2)
+{
+	double rnd = rand() % 100;
+	rnd = rnd / 100;
+	return elem1->getOccurenceNormalisee()*rnd > elem2->getOccurenceNormalisee()*rnd;
+}
+
 void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	// Création et affichage du nuage à ajouter
 	// Usefull colors
+	vector<Mot*> listeMotAleatoire = listeMot_;
+	sort(listeMotAleatoire.begin(), listeMot_.end(), comparerMotAleatoire);
 	unsigned char grid_color[3] = { 0,0,255 };
 
 	// Declare an image to draw the grid
@@ -251,7 +260,6 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 
 
 
-
 	// Main loop, exit if the display window is closed or if ESC or Q key is hit
 
 
@@ -259,6 +267,47 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		// Declare an image to display the scene
 		scene_ = grid;
 		unsigned char color = 1;
+		vector<Mot*>::iterator it; // Déclaration de l'itérateur
+		it = listeMotAleatoire.begin();
+		int hauteur, longueur = 0;
+		int i = 0;
+		int j = 0;
+		Point point = { 300,300,0 };
+		bool libre=false;
+		int iteration = 0;
+		while (it != listeMot_.end())
+		{
+			hauteur = 20*((*it)->getOccurenceNormalisee());
+			hauteur = 10 + hauteur;
+			string * mot = (*it)->getText();
+			longueur = mot->size()*hauteur;
+			bool positionne = false;
+			while (positionne || iteration<15) // Laisser le mot de coté s'il n'y a pas la place de l'afficher
+			{
+				while (i < hauteur || point.x + i <600) // eviter dépassement fenêtre
+				{
+					while (j < longueur || point.y + j <600)// eviter dépassement fenêtre
+					{
+						if ((int)scene_(point.x + i, point.y + j, 0, 0) + (int)scene_(point.x + i, point.y + j, 1) + (int)scene_(point.x + i, point.y + j, 2) != 765)
+							libre = false;
+						j++;
+					}
+					i++;
+				}
+				if (libre)
+				{
+					scene_.draw_text(point.x, point.y, mot->c_str() , &color, 0, 1, 23);
+					positionne = true;
+				}
+				else
+				{
+					iteration++;
+					point = prochainPoint(courbe_, point);
+				}
+			}
+			it++;
+		}
+
 		scene_.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
 		// Usefull variables
 
