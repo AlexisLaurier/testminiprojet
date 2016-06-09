@@ -273,10 +273,11 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		int i = 0;
 		int j = 0;
 		Point point = { 300,300,0 };
-		bool libre=false;
+		bool libre;
 		int iteration = 0;
 		while (it != listeMotAleatoire.end())
 		{
+			libre = true;
 			hauteur = 20*((*it)->getOccurenceNormalisee());
 			hauteur = 10 + hauteur;
 			string * mot = (*it)->getText();
