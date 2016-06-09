@@ -270,13 +270,13 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		vector<Mot*>::iterator it; // Déclaration de l'itérateur
 		it = listeMotAleatoire.begin();
 		int hauteur, longueur = 0;
-		int i = 0;
-		int j = 0;
 		Point point = { 300,300,0 };
 		bool libre;
 		int iteration = 0;
 		while (it != listeMotAleatoire.end())
 		{
+			int i = 0;
+			int j = 0;
 			hauteur = 20*((*it)->getOccurenceNormalisee());
 			hauteur = 10 + hauteur;
 			string * mot = (*it)->getText();
@@ -306,6 +306,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				{
 					iteration++;
 				}
+				point.posCourbe += 1;
 				point = prochainPoint(courbe_, point);
 			}
 
