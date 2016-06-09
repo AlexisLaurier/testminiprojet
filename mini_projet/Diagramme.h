@@ -5,10 +5,12 @@
 #include <string>
 #include <vector>
 
+#include "CImg.h"
 #include "Mot.h"
 #include "Menu.h"
 
 #define NOMBRE_DE_COURBE 2
+
 
 class Diagramme;
 class Menu;
@@ -36,6 +38,7 @@ class Diagramme {
 	MenuDiagramme *menu_;
 	MenuPrincipal *origine_;
 	int nombreOccurenceChoisi_;
+	cimg_library::CImg<unsigned char> scene_;
 
 public:
 	Diagramme();

@@ -31,6 +31,8 @@ Diagramme::Diagramme() {
 	orientation_ = 45.0; // Inclinaison par défaut de +/- 45°
 	menu_ = new MenuDiagramme(*this);
 	origine_ = new MenuPrincipal(*this);
+	CImg<unsigned char> grid(600, 600, 1, 3, 255);
+	scene_ = grid;
 }
 
 Diagramme::Diagramme(const Diagramme & diagramme) {
@@ -44,6 +46,8 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 	orientation_ = diagramme.getOrientation();
 	menu_ = diagramme.getMenu();
 	origine_ = diagramme.getOrigine();
+	CImg<unsigned char> grid(600, 600, 1, 3, 255);
+	scene_ = grid;
 }
 
 
@@ -229,12 +233,12 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 
 		// Display the scene
 		// Declare an image to display the scene
-		CImg<unsigned char> scene = grid;
+		scene_ = grid;
 		unsigned char color = 1;
-		scene.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
+		scene_.draw_text(0, 0, "Hello guys !", &color, 0, 1, 23);
 		// Usefull variables
 
-		scene.display(disp);
+		scene_.display(disp);
 
 		disp.wait();
 
@@ -385,6 +389,8 @@ void Diagramme::charger() {
 }
 
 void Diagramme::exporter() {
+	string nomSave = getSaveFileName("Nom du fichier a sauvegarder :", "Fichiers image (*.ppm )");
+	scene_.save(nomSave.c_str());
 
 }
 
