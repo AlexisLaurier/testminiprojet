@@ -118,8 +118,8 @@ void Diagramme::creerListe()
 
 				sort(listeMot_.begin(), listeMot_.end(), comparerMot);
 				//recherche des extrémaux en nombre d'occurence
-				int min = 0;
-				int max = 0;
+				int min = 1;
+				int max = 1;
 				int value = 0;
 				vector<Mot*>::iterator it; // Déclaration de l'itérateur
 				for (it = listeMot_.begin(); it != listeMot_.end(); it++)
@@ -134,7 +134,7 @@ void Diagramme::creerListe()
 					for (it = listeMot_.begin(); it != listeMot_.end(); it++)
 					{
 						double occurence;
-						occurence = (*it)->getOccurenceNormalisee();
+						occurence = (*it)->getOccurence();
 						occurence = (occurence - min) / (max - min);
 						(*it)->setOccurenceNormalisee(occurence);
 
