@@ -300,7 +300,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				bool utilise = false;
 				string text = *(*it)->getText();
 
-				int hauteur = 15 + 50 * (*it)->getOccurenceNormalisee();
+				int hauteur = 15 + 100 * (*it)->getOccurenceNormalisee();
 				int longueur = text.size()*hauteur;
 
 				for (int i = point.x; i < point.x + longueur + 10 && i<600;i++) {
