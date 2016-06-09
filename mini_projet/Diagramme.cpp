@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <sstream>
 #include <algorithm>
+#include <time.h>
 
 #include "Menu.h"
 #include "Diagramme.h"
@@ -267,8 +268,11 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		// Declare an image to display the scene
 		scene_ = grid;
 		Point point{ 300,300,0 };
-		unsigned char color = 1;
+		srand(time(NULL));
 		for (vector<Mot*>::iterator it = listeMotAleatoire.begin(); it != listeMotAleatoire.end(); it++) {
+
+			unsigned char color[] = { rand()%256, rand() % 256,rand() % 256 };
+
 			bool utilise = false;
 			string text = *(*it)->getText();
 
@@ -289,7 +293,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				}
 			}
 			if (!utilise) {
-				scene_.draw_text(point.x, point.y, text.c_str(), &color, 0, 1, 30);
+				scene_.draw_text(point.x, point.y, text.c_str(), color, 0, 1, hauteur);
 			}
 			else {
 				it--;
