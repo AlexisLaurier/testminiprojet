@@ -266,72 +266,23 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		// Display the scene
 		// Declare an image to display the scene
 		scene_ = grid;
+		Point point{ 300,300,0 };
 		unsigned char color = 1;
-		vector<Mot*>::iterator it; // Déclaration de l'itérateur
-		it = listeMotAleatoire.begin();
-		int hauteur, longueur = 0;
-		Point point = { 300,300,0 };
-		bool libre;
-		int iteration = 0;
-		int** tab = new int*[600];
-		for (int i = 0; i < 600; i++)
-			tab[i] = new int[600];
-		while (it != listeMotAleatoire.end())
-		{
-			longueur = 50*((*it)->getOccurenceNormalisee());
-			longueur = 40 + longueur;
-			string * mot = (*it)->getText();
-			hauteur = mot->size()*longueur;
-			for (int i = 0; i < 600; i++)
-			{
-				for (int j = 0; j < 600;j++)
-				{
-					tab[i][j] = 0;
+		for (vector<Mot*>::iterator it = listeMotAleatoire.begin(); it != listeMotAleatoire.end(); it++) {
+			bool utilise = false;
+			for (int i = 0; i < 600;i++) {
+				for (int j = 0;j < 600;j++) {
+					if (((int)scene_(i, j, 0, 0) + (int)scene_(i, j, 0, 1) + (int)scene_(i, j, 0, 2)) != 765)
+						utilise = true;
+
+					if(!utilise)
+						scene_.draw_text(point.x, point.y, (*it)->getText()->c_str(), &color, 0, 1, 30);
 				}
 			}
-			bool positionne = false;
-			while (!positionne && iteration<150) // Laisser le mot de coté si aucune place n'est trouvé au bout de 15 essais
-			{
-				libre = true;
-				for (int i = int(point.x); i < (int(point.x) + hauteur) && i<600; i++)
-				{
 
-					for (int j = int(point.y); j < (int(point.y) + longueur) && j<600; j++)
-					{
-						if (tab[i][j] == 1)
-						{
-							libre = false;
-							cout << "j'ai trouve des 1 connards" << endl;
-						}
-					}
-				}
-				if (libre)
-				{
-					iteration = 0;
-					color = rand() % 600;
-					scene_.draw_text((int)point.x, (int)point.y, mot->c_str() , &color, 0, 1, hauteur/4);
-					cout << longueur << " " << hauteur << endl;
-					cout << "pos " << (int)point.x << " " << (int)point.y << endl;
-					cout << libre << endl;
-					positionne = true;
-					for (int i = int(point.x); i < int(point.x) + longueur; i++)
-					{
-						for (int j = int(point.y); j < int(point.y) + hauteur; j++)
-						{
-							tab[i][j] = 1;
-						}
-					}
-				}
-				else
-				{
-					iteration++;
-				}
-
-				point = prochainPoint(courbe_, point);
-			}
-
-			it++;
 		}
+		
+
 
 		
 		// Usefull variables
