@@ -136,6 +136,7 @@
     <Text Include="Description systeme sauvegarde.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Desktop\specification.docx" />
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
