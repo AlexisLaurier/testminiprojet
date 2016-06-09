@@ -50,7 +50,7 @@ Diagramme::Diagramme(const Diagramme & diagramme) {
 void Diagramme::creerListe() 
 {
 	char reponse;
-	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
+	cout << "Attention, les donnees non enregistrees seront effacees" << endl;
 	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
 	cin >> reponse;
 	if ((reponse == 'n') || (reponse == 'N'))
@@ -58,11 +58,11 @@ void Diagramme::creerListe()
 		return;
 	}
 
-	string nomOpen = getOpenFileName("Nom du fichier à charger :", "Fichiers txt (*.txt )");
+	string nomOpen = getOpenFileName("Nom du fichier a charger :", "Fichiers txt (*.txt )");
 
 	if (nomOpen != "")
 	{
-		cout << "Nom du fichier chargé : " << nomOpen << endl;
+		cout << "Nom du fichier charge : " << nomOpen << endl;
 		ifstream fich(nomOpen.c_str());
 		if (!fich.is_open())
 		{
@@ -215,7 +215,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	CImg<unsigned char> grid(600, 600, 1, 3, 255);
 
 	// Declare a display to draw the scene
-	CImgDisplay disp(grid, "Générateur de mot", 0, false, false);
+	CImgDisplay disp(grid, "Generateur de mot", 0, false, false);
 
 	// Center the window on the screen
 	disp.move((CImgDisplay::screen_width() - disp.width()) / 2,
@@ -268,12 +268,12 @@ bool has_suffix(const std::string &str)
 
 void Diagramme::sauvegarde() {
 	cout << "Merci de choisir dans quel fichier effectuer la sauvegarde" << endl;
-	string nomSave = getSaveFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
+	string nomSave = getSaveFileName("Nom du fichier a sauvegarder :", "Fichiers genmots (*.genmots )");
 	if (!has_suffix(nomSave))
 		nomSave += ".genmots";
 	if (nomSave != "")
 	{
-		cout << "Nom du fichier sauvegardé : " << nomSave << endl;
+		cout << "Nom du fichier sauvegarde : " << nomSave << endl;
 		ofstream fich(nomSave.c_str());
 		if (!fich.is_open())
 			cout << "Impossible d'enregistrer ici, verifier le chemin du fichier" << endl;
@@ -295,7 +295,7 @@ void Diagramme::sauvegarde() {
 			fich << courbe_ << endl;
 			fich << orientation_ << endl;
 			fich << "/settings&&" << endl;
-			cout << "Sauvegarde effectuée !" << endl;
+			cout << "Sauvegarde effectuee !" << endl;
 			system("pause");
 
 		}
@@ -311,7 +311,7 @@ void Diagramme::charger() {
 
 	Diagramme diag;
 	char reponse;
-	cout << "Attention, les donnees non enregistrées seront effacées" << endl;
+	cout << "Attention, les donnees non enregistrees seront effacees" << endl;
 	cout << "Souhaitez-vous poursuivre ? (o/n)" << endl;
 	cin >> reponse;
 	if ((reponse == 'N') || (reponse == 'n')) 
@@ -319,11 +319,11 @@ void Diagramme::charger() {
 		exit;
 	}
 
-	string nomOpen = getOpenFileName("Nom du fichier à sauvegarder :", "Fichiers genmots (*.genmots )");
+	string nomOpen = getOpenFileName("Nom du fichier a sauvegarder :", "Fichiers genmots (*.genmots )");
 
 	if (nomOpen != "")
 	{
-		cout << "Nom du fichier chargé : " << nomOpen << endl;
+		cout << "Nom du fichier charge : " << nomOpen << endl;
 		ifstream fich(nomOpen.c_str());
 		if (!fich.is_open())
 		{
@@ -367,14 +367,14 @@ void Diagramme::charger() {
 			getline(fich, ligne);
 			fich.close();
 			if (ligne != "/settings&&") {
-				cerr << "sauvegarde endommagée, les donnees n'ont pas été importées" << endl;
+				cerr << "sauvegarde endommagee, les donnees n'ont pas été importees" << endl;
 				system("pause");
 				exit;
 
 			}
 	
 			*this = diag;
-			cout << "Chargement effectuée !" << endl;
+			cout << "Chargement effectuee !" << endl;
 			system("pause");
 			return;
 
