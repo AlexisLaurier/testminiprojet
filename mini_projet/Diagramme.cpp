@@ -298,7 +298,7 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				{
 					iteration = 0;
 					color = rand() % 600;
-					scene_.draw_text(point.x, point.y, mot->c_str() , &color, 0, 1, 23);
+					scene_.draw_text((int)point.x, (int)point.y, mot->c_str() , &color, 0, 1, 23);
 					positionne = true;
 				}
 				else
