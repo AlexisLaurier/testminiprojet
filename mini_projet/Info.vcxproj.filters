@@ -54,4 +54,7 @@
   <ItemGroup>
     <Text Include="Description systeme sauvegarde.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>
