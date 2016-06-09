@@ -1,3 +1,4 @@
+//Julian Romain et Laurier Alexis
 #include <iostream>
 #include <string>
 #include "Mot.h"
