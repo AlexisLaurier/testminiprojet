@@ -1,0 +1,20 @@
+Un menu principal :
+-	Charger le texte à analyser
+-	Accéder à une fonction permettant de choisir les mots à afficher
+-	Accéder à un sous-menu permettant de générer le graphique, modifier certains paramètres graphiques et exporter l’image.
+-	Lancer une sauvegarde
+-	Ouvrir une sauvegarde
+-	Quitter l’application
+
+Sous-menu de génération du graphique :
+-	Relancer un tirage pour modifier la place des mots
+-	Changer la police
+-	Exporter sous un fichier image le graphe généré
+-	Changer le nombre de mot affiché 
+-	Changer la courbe de base de génération
+-	Retourner au menu principal
+
+
+Le programme devra analyser le texte en le scindant avec tous les caractère habituels de ponctuation et les espaces :  . :, !?  
+Le nuage généré devra faire apparaitre les mots avec le plus fort taux d’apparition sur le centre de l’image, avec des couleurs aléatoires, et dans un ordre aléatoire d’apparition. Chaque mot devra avoir une couleur aléatoire qui est modifiée à chaque génération
+
