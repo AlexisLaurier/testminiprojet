@@ -39,6 +39,7 @@ class Diagramme {
 	MenuPrincipal *origine_;
 	int nombreOccurenceChoisi_;
 	cimg_library::CImg<unsigned char> scene_;
+	cimg_library::CImgDisplay disp_;
 
 public:
 	Diagramme();

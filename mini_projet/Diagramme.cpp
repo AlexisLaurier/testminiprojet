@@ -235,30 +235,53 @@ void Diagramme::choixMot() {
 
 }
 
-bool comparerMotAleatoire(const Mot *elem1, const Mot *elem2)
-{
-	srand(time(NULL));
-	double rnd = rand() % 100;
-	rnd = rnd / 10;
-	return elem1->getOccurenceNormalisee() > elem2->getOccurenceNormalisee()*rnd;
-}
-
 void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 	// Création et affichage du nuage à ajouter
 	// Usefull colors
-	vector<Mot*> listeMotAleatoire = listeMot_;
-	sort(listeMotAleatoire.begin(), listeMotAleatoire.end(), comparerMotAleatoire);
+	if (reload)
+		disp_.close();
+
+	vector<Mot*> listeMotAleatoire;
+	listeMotAleatoire.clear();
+
+	// Mélange des mots
+	for (vector<Mot*>::iterator it = listeMot_.begin();it != listeMot_.end(); it++) {
+		int hasard = rand() % 5;
+		int actuelle = (*it)->getOccurence();
+		it++;
+		if (it != listeMot_.end()) {
+			int futur = (*it)->getOccurence();
+			if (actuelle < futur + hasard) {
+				listeMotAleatoire.push_back(*it);
+				it--;
+				listeMotAleatoire.push_back(*it);
+				it++;
+			}
+			else {
+				it--;
+				listeMotAleatoire.push_back(*it);
+			}
+		}
+		else {
+			it--;
+			listeMotAleatoire.push_back(*it);
+		}
+	}
+		
+
+	
+
 	unsigned char grid_color[3] = { 0,0,255 };
 
 	// Declare an image to draw the grid
 	CImg<unsigned char> grid(600, 600, 1, 3, 255);
 
 	// Declare a display to draw the scene
-	CImgDisplay disp(grid, "Generateur de mot", 0, false, false);
+	disp_ = CImgDisplay(grid, "Generateur de mot", 0, false, false);
 
 	// Center the window on the screen
-	disp.move((CImgDisplay::screen_width() - disp.width()) / 2,
-		(CImgDisplay::screen_height() - disp.height()) / 2);
+	disp_.move((CImgDisplay::screen_width() - disp_.width()) / 2,
+		(CImgDisplay::screen_height() - disp_.height()) / 2);
 
 
 
@@ -269,7 +292,6 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		// Declare an image to display the scene
 		scene_ = grid;
 		Point point{ 300,300,0 };
-		srand(time(NULL));
 		int nombreMotAffiche = 0;
 		for (vector<Mot*>::iterator it = listeMotAleatoire.begin(); it != listeMotAleatoire.end() && nombreMotAffiche<nombreAffiche_; it++) {
 			if ((*it)->getChoisi()) {
@@ -278,11 +300,11 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 				bool utilise = false;
 				string text = *(*it)->getText();
 
-				int hauteur = 15 + 40 * (*it)->getOccurenceNormalisee();
+				int hauteur = 15 + 50 * (*it)->getOccurenceNormalisee();
 				int longueur = text.size()*hauteur;
 
-				for (int i = point.x; i < point.x + longueur + 10;i++) {
-					for (int j = point.y;j < point.y + hauteur + 10;j++) {
+				for (int i = point.x; i < point.x + longueur + 10 && i<600;i++) {
+					for (int j = point.y;j < point.y + hauteur + 10 && j<600;j++) {
 
 						int r = (int)scene_(i, j, 0, 0);
 						int g = (int)scene_(i, j, 0, 1);
@@ -310,12 +332,12 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		
 		// Usefull variables
 
-		scene_.display(disp);
+		scene_.display(disp_);
 
-		disp.wait();
+		disp_.wait();
 
 		// Handle window resize
-		if (disp.is_resized()) disp.resize();
+		if (disp_.is_resized()) disp_.resize();
 
 
 
