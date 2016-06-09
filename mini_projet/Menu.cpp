@@ -162,9 +162,6 @@ void MenuPrincipal::executerOption(const string &nom) {
 
 MenuDiagramme::MenuDiagramme(const Diagramme &diagramme) : Menu("Gestion du nuage de mot", &diagramme) {
 	ajouterOption("reload", "Deplacer les mots (aleatoirement)");
-	ajouterOption("chgPolice", "Changer la police des mots");
-	ajouterOption("chgOrientation", "Changer l'orientation des mots");
-	ajouterOption("chgCourbe", "Changer la courbe de base");
 	ajouterOption("chgNb", "Changer le nombre de mot affiche");
 	ajouterOption("export", "Sauvegarder l'image du nuage");
 	ajouterOption("retour", "Retour au menu principal");
@@ -175,12 +172,6 @@ void MenuDiagramme::executerOption(const string &nom) {
 		MenuPrincipal Menu(*getDiagramme()->getOrigine());
 		getDiagramme()->afficher(Menu, true);
 	}
-	else if (nom == "chgPolice")
-		getDiagramme()->choixPolice();
-	else if (nom == "chgOrientation")
-		getDiagramme()->choixOrientation();
-	else if (nom == "chgCourbe")
-		getDiagramme()->choixCourbe();
 	else if (nom == "chgNb")
 		getDiagramme()->choixNombre();
 	else if (nom == "export")
