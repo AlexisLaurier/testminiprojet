@@ -270,22 +270,31 @@ void Diagramme::afficher(MenuPrincipal &origine, bool reload) {
 		unsigned char color = 1;
 		for (vector<Mot*>::iterator it = listeMotAleatoire.begin(); it != listeMotAleatoire.end(); it++) {
 			bool utilise = false;
-			for (int i = 300; i < 350;i++) {
-				for (int j = 300;j < 350;j++) {
+			string text = *(*it)->getText();
+
+			int hauteur = 15 + 20 * (*it)->getOccurenceNormalisee();
+			int longueur = text.size()*hauteur;
+
+			for (int i = point.x; i < point.x + longueur+10;i++) {
+				for (int j = point.y;j < point.y + hauteur+10;j++) {
+
 					int r = (int)scene_(i, j, 0, 0);
 					int g = (int)scene_(i, j, 0, 1);
 					int b = (int)scene_(i, j, 0, 2);
 					if (r + g + b != 765) {
 						utilise = true;
-						cout << "JE CHANGE" << endl << endl << endl << endl;
 					}
 					
-						if (!utilise) {
-							scene_.draw_text(point.x, point.y, (*it)->getText()->c_str(), &color, 0, 1, 30);
-						}
+						
 				}
 			}
-			//scene_.display(disp);
+			if (!utilise) {
+				scene_.draw_text(point.x, point.y, text.c_str(), &color, 0, 1, 30);
+			}
+			else {
+				it--;
+			}
+			point = prochainPoint(cercle, point);
 		}
 		
 
